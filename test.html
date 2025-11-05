@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>JavaScript Debug Test</h1>
+    <div id="output"></div>
+    
+    <script src="js/utils.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('output').innerHTML = '<p>Utils loaded: ' + (typeof window.EventMapUtils !== 'undefined') + '</p>';
+        document.getElementById('output').innerHTML += '<p>EventMap loaded: ' + (typeof EventMap !== 'undefined') + '</p>';
+        
+        setTimeout(() => {
+            if (window.eventMap) {
+                document.getElementById('output').innerHTML += '<p>Events count: ' + eventMap.events.length + '</p>';
+                document.getElementById('output').innerHTML += '<p>First event: ' + JSON.stringify(eventMap.events[0]) + '</p>';
+            } else {
+                document.getElementById('output').innerHTML += '<p style="color:red">EventMap not initialized!</p>';
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
