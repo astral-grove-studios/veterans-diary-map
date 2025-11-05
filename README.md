@@ -2,74 +2,82 @@
 
 A simple, vanilla JavaScript event mapping system designed to display veteran events from Google Calendar on an interactive map. Built for Veterans for Veterans in Care (VFVIC) to show events across the Northeast of England.
 
-## Features
+## Key Features
 
 - **Google Calendar Integration**: Connects to VFVIC Google Calendar for live event data
 - **Interactive Map**: Uses OpenStreetMap via Leaflet.js (no API keys required)
 - **Veteran Event Categories**: Breakfast clubs, drop-in centres, meetings, workshops, social events, support groups
-- **Search & Filter**: Search by text and filter by category/date
+- **Search & Filter**: Search by text and filter by category/date with debouncing for performance
 - **Northeast England Focus**: Predefined coordinates for common locations
-- **Responsive Design**: Works on desktop and mobile devices
+- **Responsive Design**: Works on desktop and mobile devices with optimized mobile modal
 - **WordPress Ready**: Designed for easy WordPress integration
 - **No Framework Dependencies**: Pure HTML, CSS, and JavaScript
-
-## Features
-
-- **Interactive Map**: Uses OpenStreetMap via Leaflet.js (no API keys required)
-- **Event Management**: Display events with location, date, category, and details
-- **Search & Filter**: Search by text and filter by category/date
-- **Responsive Design**: Works on desktop and mobile devices
-- **WordPress Ready**: Designed for easy WordPress integration
-- **No Framework Dependencies**: Pure HTML, CSS, and JavaScript
+- **Loading States**: Visual feedback for data loading and errors
+- **Enhanced Security**: Input validation and XSS protection
 
 ## Quick Start
 
-1. **Local Development**:
-   ```bash
-   # Start local server
-   python -m http.server 8080
+**Local Development:**
 
-   # Open in browser
-   http://localhost:8080
-   ```
+```bash
+# Start local server
+python -m http.server 8080
 
-2. **View the Prototype**:
-   - Open `index.html` in any modern browser
-   - Or use the VS Code Live Server extension
+# Open in browser
+http://localhost:8080
+```
+
+**View the Prototype:**
+
+- Open `index.html` in any modern browser
+- Or use the VS Code Live Server extension
 
 ## File Structure
 
-```
+```text
 VFVIC/
-├── index.html              # Main HTML file
-├── styles.css              # CSS styles
-├── script.js               # JavaScript functionality
-├── WORDPRESS_INTEGRATION.md # WordPress integration guide
-└── README.md               # This file
+├── index.html                  # Main HTML file
+├── styles.css                  # Main styles
+├── css/
+│   └── loading-states.css      # Loading & animation styles
+├── js/
+│   └── utils.js                # Utility functions (debounce, toast, etc.)
+├── script.js                   # Main JavaScript functionality
+├── package.json                # Project metadata
+├── config.example.js           # Configuration template
+├── .gitignore                  # Git ignore rules
+├── WORDPRESS_INTEGRATION.md    # WordPress integration guide
+├── GOOGLE_CALENDAR_SETUP.md    # Calendar setup instructions
+└── README.md                   # This file
 ```
 
 ## Sample Event Data
 
-The prototype includes 5 sample events across Australian cities:
-- Tech Conference 2025 (Melbourne)
-- JavaScript Workshop (Sydney)
-- Community Meetup (Brisbane)
-- Design Thinking Workshop (Perth)
-- Social Mixer (Adelaide)
+The prototype includes sample events demonstrating the map's capabilities. Connect to your Google Calendar for live veteran events data (see GOOGLE_CALENDAR_SETUP.md).
 
 ## Key Components
 
 ### EventMap Class
+
 - **Main Controller**: Manages map, events, and interactions
-- **Event Loading**: Loads and displays event data
-- **Filtering**: Handles search and category filtering
+- **Event Loading**: Loads and displays event data with loading states
+- **Filtering**: Handles search and category filtering with debouncing
 - **Map Integration**: Manages Leaflet map and markers
+- **Security**: Input validation and sanitization
 
 ### WordPress Integration API
+
 - **EventMapAPI.addEvent()**: Add new events programmatically
 - **EventMapAPI.getEvents()**: Retrieve all events
 - **EventMapAPI.filterByCategory()**: Filter by category
 - **EventMapAPI.searchEvents()**: Search events
+
+### Utility Functions
+
+- **debounce()**: Limit function execution frequency
+- **showToast()**: Display toast notifications
+- **showLoadingSpinner()**: Show loading overlay
+- **sanitizeText/Html()**: Secure input sanitization
 
 ## WordPress Integration
 

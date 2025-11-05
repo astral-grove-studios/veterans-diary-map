@@ -1,5 +1,5 @@
 // Event Map Integration Prototype
-// Simple vanilla JavaScript implementation for easy WordPress integration
+// Enhanced with loading states, debouncing, and improved security
 
 class EventMap {
     constructor() {
@@ -8,15 +8,27 @@ class EventMap {
         this.events = [];
         this.filteredEvents = [];
         this.displayedEvents = []; // Events currently shown in the list
-        this.eventsPerPage = 20; // Number of events to load per page
+        
+        // Use config constants
+        const config = window.EventMapUtils?.CONFIG || {};
+        this.eventsPerPage = config.EVENTS_PER_PAGE || 20;
+        this.maxMarkersOnMap = config.MAX_MARKERS_ON_MAP || 100;
+        
         this.currentPage = 0;
         this.currentDateFilter = 'all'; // 'today', 'week', 'month', 'all'
-        this.maxMarkersOnMap = 100; // Limit markers for performance
+        
+        // Utility functions
+        this.utils = window.EventMapUtils;
 
         this.init();
     }
 
     async init() {
+        // Show loading state
+        if (this.utils) {
+            this.utils.showLoadingSpinner('Loading events...');
+        }
+
         // Try to load events from local calendar file first, then Google Calendar API, then sample data
         try {
             await this.loadLocalCalendarEvents();
@@ -27,15 +39,23 @@ class EventMap {
             } catch (apiError) {
                 console.warn('Could not load Google Calendar events, using sample data:', apiError);
                 this.loadSampleEvents();
+                
+                if (this.utils) {
+                    this.utils.showToast('Using sample data. Configure Google Calendar for live events.', 'info', 5000);
+                }
             }
         }
-
 
         this.filteredEvents = [...this.events];
         this.initMap();
         this.populateCategoryFilter();
         this.displayEvents();
         this.setupEventListeners();
+        
+        // Hide loading state
+        if (this.utils) {
+            this.utils.hideLoadingSpinner();
+        }
     }
 
     async loadLocalCalendarEvents() {
@@ -62,11 +82,25 @@ class EventMap {
             this.events = await this.processCalendarItems(data.items);
             console.log(`Processed ${this.events.length} events for display`);
 
+            // If no events after filtering, treat as error and use sample data
+            if (this.events.length === 0) {
+                throw new Error('No upcoming events found in calendar file (all events may be in the past)');
+            }
+
             // Show success notification
             this.showRealDataNotification();
+            
+            if (this.utils) {
+                this.utils.showToast(`Loaded ${this.events.length} events from calendar`, 'success');
+            }
 
         } catch (error) {
             console.error('Failed to load local calendar events:', error);
+            
+            if (this.utils) {
+                this.utils.showToast('Failed to load calendar events', 'error');
+            }
+            
             throw error;
         }
     }
@@ -155,39 +189,37 @@ class EventMap {
     }
 
     sanitizeText(text) {
+        // Use enhanced sanitization from utils if available
+        if (this.utils && this.utils.sanitizeText) {
+            return this.utils.sanitizeText(text);
+        }
+        
+        // Fallback to basic sanitization
         if (!text) return '';
-
-        // Remove HTML tags and decode HTML entities
         return text
-            .replace(/<[^>]*>/g, '') // Remove HTML tags
+            .replace(/<[^>]*>/g, '')
             .replace(/&lt;/g, '<')
             .replace(/&gt;/g, '>')
             .replace(/&amp;/g, '&')
             .replace(/&quot;/g, '"')
             .replace(/&#39;/g, "'")
-            .replace(/\u003c/g, '<')
-            .replace(/\u003e/g, '>')
             .trim();
     }
 
     sanitizeHtml(html) {
+        // Use enhanced sanitization from utils if available
+        if (this.utils && this.utils.sanitizeHtml) {
+            return this.utils.sanitizeHtml(html);
+        }
+        
+        // Fallback to basic sanitization
         if (!html) return '';
-
-        // Convert HTML to plain text, preserving line breaks
         return html
             .replace(/<p[^>]*>/g, '')
             .replace(/<\/p>/g, '\n')
             .replace(/<br[^>]*>/g, '\n')
-            .replace(/<[^>]*>/g, '') // Remove all other HTML tags
-            .replace(/&lt;/g, '<')
-            .replace(/&gt;/g, '>')
-            .replace(/&amp;/g, '&')
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;/g, "'")
-            .replace(/\u003c/g, '<')
-            .replace(/\u003e/g, '>')
-            .replace(/\u0080\u008b/g, '') // Remove invisible characters
-            .replace(/\n+/g, ' ') // Replace multiple newlines with space
+            .replace(/<[^>]*>/g, '')
+            .replace(/\n+/g, ' ')
             .trim();
     }
 
@@ -572,18 +604,19 @@ class EventMap {
         // Show notification that sample data is being used
         this.showSampleDataNotification();
 
-        // Sample veteran events data for the Northeast of England
+        // Sample veteran events data for November & December 2025 - Northeast England
         this.events = [
+            // NOVEMBER 2025 EVENTS
             {
                 id: 1,
                 title: "Veterans Breakfast Club - Newcastle",
-                description: "Weekly breakfast meetup for veterans in Newcastle. Come and join fellow veterans for a friendly chat over breakfast.",
+                description: "Weekly breakfast meetup for veterans in Newcastle. Come and join fellow veterans for a friendly chat over breakfast. All veterans and serving personnel welcome.",
                 category: "breakfast-club",
                 categories: ["breakfast-club", "social"],
-                date: "2025-11-02",
-                time: "10:30 - 11:30",
-                startTime: "10:30",
-                endTime: "11:30",
+                date: "2025-11-06",
+                time: "09:00 - 11:00",
+                startTime: "09:00",
+                endTime: "11:00",
                 location: "Newcastle upon Tyne, UK",
                 lat: 54.9783,
                 lng: -1.6178,
@@ -591,13 +624,14 @@ class EventMap {
             },
             {
                 id: 2,
-                title: "Drop-In Support Centre",
-                description: "Open drop-in centre for veterans needing support, advice, or just a chat. No appointment necessary.",
+                title: "Veterans Drop-In Centre",
+                description: "Open drop-in centre for veterans needing support, advice, or just a chat. Free tea and coffee. Benefits advice available. No appointment necessary.",
                 category: "drop-in",
-                date: "2025-11-05",
-                time: "09:00 - 16:00",
-                startTime: "09:00",
-                endTime: "16:00",
+                categories: ["drop-in", "support"],
+                date: "2025-11-07",
+                time: "10:00 - 15:00",
+                startTime: "10:00",
+                endTime: "15:00",
                 location: "Sunderland, UK",
                 lat: 54.9069,
                 lng: -1.3838,
@@ -605,70 +639,430 @@ class EventMap {
             },
             {
                 id: 3,
-                title: "Veterans Association Meeting",
-                description: "Monthly meeting for the local veterans association. Discussing upcoming events and community support.",
-                category: "meeting",
-                date: "2025-11-10",
+                title: "Remembrance Day Parade & Service",
+                description: "Annual Remembrance Day parade and service. All veterans invited to march. Wreath laying ceremony at war memorial. Family and public welcome.",
+                category: "remembrance",
+                categories: ["remembrance", "social"],
+                date: "2025-11-11",
+                time: "10:00 - 12:00",
+                startTime: "10:00",
+                endTime: "12:00",
+                location: "Durham, UK",
+                lat: 54.7753,
+                lng: -1.5849,
+                organizer: "Durham Royal British Legion"
+            },
+            {
+                id: 4,
+                title: "PTSD Support Group",
+                description: "Confidential peer support group for veterans dealing with PTSD and mental health challenges. Professional counsellor present. Safe, understanding environment.",
+                category: "support",
+                categories: ["support", "mental-health"],
+                date: "2025-11-12",
+                time: "18:00 - 20:00",
+                startTime: "18:00",
+                endTime: "20:00",
                 location: "Middlesbrough, UK",
                 lat: 54.5742,
                 lng: -1.2349,
-                organizer: "Middlesbrough Veterans"
+                organizer: "Combat Stress"
             },
             {
-                id: 1,
-                title: "Veterans Support Meeting",
-                description: "Monthly support meeting for veterans in the Newcastle area. Open to all service members and their families.",
-                category: "support",
+                id: 5,
+                title: "Veterans Breakfast Club - Sunderland",
+                description: "Morning breakfast club for veterans. Relaxed atmosphere, good food, great company. All veterans welcome regardless of service or length.",
+                category: "breakfast-club",
+                categories: ["breakfast-club", "social"],
+                date: "2025-11-13",
+                time: "09:00 - 11:00",
+                startTime: "09:00",
+                endTime: "11:00",
+                location: "Sunderland, UK",
+                lat: 54.9069,
+                lng: -1.3838,
+                organizer: "VFVIC"
+            },
+            {
+                id: 6,
+                title: "Employment Workshop for Veterans",
+                description: "CV writing, interview skills, and job search strategies workshop. Connect with veteran-friendly employers. Free lunch provided.",
+                category: "workshop",
+                categories: ["workshop", "training"],
+                date: "2025-11-14",
+                time: "10:00 - 15:00",
+                startTime: "10:00",
+                endTime: "15:00",
+                location: "Newcastle upon Tyne, UK",
+                lat: 54.9783,
+                lng: -1.6178,
+                organizer: "Veterans Gateway"
+            },
+            {
+                id: 7,
+                title: "Friday Social at Legion",
+                description: "Weekly social evening at the Royal British Legion. Pool, darts, and good conversation. Partners and families welcome. Bar available.",
+                category: "social",
+                categories: ["social"],
                 date: "2025-11-15",
+                time: "19:00 - 23:00",
+                startTime: "19:00",
+                endTime: "23:00",
+                location: "Gateshead, UK",
+                lat: 54.9537,
+                lng: -1.6103,
+                organizer: "Royal British Legion"
+            },
+            {
+                id: 8,
+                title: "Veterans Walking Group",
+                description: "Moderate 5-mile countryside walk. All fitness levels welcome. Finish at local pub for optional lunch. Dogs welcome on leads.",
+                category: "sport",
+                categories: ["sport", "social", "health"],
+                date: "2025-11-16",
+                time: "10:00 - 13:00",
+                startTime: "10:00",
+                endTime: "13:00",
+                location: "Hexham, UK",
+                lat: 54.9708,
+                lng: -2.1008,
+                organizer: "Walking With The Wounded"
+            },
+            {
+                id: 9,
+                title: "Veterans Art Therapy Session",
+                description: "Creative art therapy for wellbeing. No art experience needed. All materials provided. Express yourself in a supportive environment.",
+                category: "workshop",
+                categories: ["workshop", "mental-health", "wellbeing"],
+                date: "2025-11-18",
+                time: "13:00 - 15:00",
+                startTime: "13:00",
+                endTime: "15:00",
+                location: "Durham, UK",
+                lat: 54.7753,
+                lng: -1.5849,
+                organizer: "Arts for Veterans"
+            },
+            {
+                id: 10,
+                title: "Armed Forces Covenant Meeting",
+                description: "Quarterly meeting to discuss local support for armed forces community. Open to all interested veterans and service providers.",
+                category: "meeting",
+                categories: ["meeting"],
+                date: "2025-11-19",
                 time: "14:00 - 16:00",
+                startTime: "14:00",
+                endTime: "16:00",
+                location: "Middlesbrough, UK",
+                lat: 54.5742,
+                lng: -1.2349,
+                organizer: "Middlesbrough Council"
+            },
+            {
+                id: 11,
+                title: "Veterans Breakfast Club - Newcastle",
+                description: "Weekly breakfast meetup for veterans. Informal gathering, no agenda, just good company and conversation.",
+                category: "breakfast-club",
+                categories: ["breakfast-club", "social"],
+                date: "2025-11-20",
+                time: "09:00 - 11:00",
+                startTime: "09:00",
+                endTime: "11:00",
                 location: "Newcastle upon Tyne, UK",
                 lat: 54.9783,
                 lng: -1.6178,
                 organizer: "VFVIC"
             },
             {
-                id: 5,
-                title: "Veterans Social Evening",
-                description: "Social gathering for veterans and their families. Light refreshments provided.",
+                id: 12,
+                title: "Women Veterans Coffee Morning",
+                description: "Coffee morning specifically for women veterans. Safe space to share experiences and build connections. Childcare available if needed.",
                 category: "social",
-                date: "2025-11-20",
-                time: "18:30 - 21:00",
-                location: "Gateshead, UK",
-                lat: 54.9537,
-                lng: -1.6103,
-                organizer: "Gateshead Veterans"
+                categories: ["social", "support"],
+                date: "2025-11-21",
+                time: "10:00 - 12:00",
+                startTime: "10:00",
+                endTime: "12:00",
+                location: "Newcastle upon Tyne, UK",
+                lat: 54.9783,
+                lng: -1.6178,
+                organizer: "VFVIC"
             },
             {
-                id: 6,
-                title: "Support Group Session",
-                description: "Confidential support group for veterans dealing with transition challenges.",
-                category: "support",
+                id: 13,
+                title: "Veterans Five-a-Side Football",
+                description: "Weekly five-a-side football for veterans. All abilities welcome. Indoor pitch, changing facilities available. Just turn up and play.",
+                category: "sport",
+                categories: ["sport", "health"],
+                date: "2025-11-22",
+                time: "14:00 - 16:00",
+                startTime: "14:00",
+                endTime: "16:00",
+                location: "Sunderland, UK",
+                lat: 54.9069,
+                lng: -1.3838,
+                organizer: "Help for Heroes"
+            },
+            {
+                id: 14,
+                title: "Veterans Drop-In Centre",
+                description: "Weekly drop-in for advice, support, and companionship. Benefits experts and mental health support available. All welcome.",
+                category: "drop-in",
+                categories: ["drop-in", "support"],
                 date: "2025-11-25",
+                time: "10:00 - 15:00",
+                startTime: "10:00",
+                endTime: "15:00",
                 location: "Hartlepool, UK",
                 lat: 54.6896,
                 lng: -1.2115,
                 organizer: "VFVIC"
             },
             {
-                id: 7,
-                title: "Clay Pigeon Shooting",
-                description: "Sunday morning clay pigeon shooting event for veterans. Equipment provided, all skill levels welcome.",
-                category: "sport",
-                categories: ["sport"],
-                date: "2025-11-03",
-                time: "09:30 - 12:00",
+                id: 15,
+                title: "Veterans Breakfast Club - Sunderland",
+                description: "Weekly breakfast gathering. Great food, friendly faces, supportive atmosphere. Everyone has a story to share.",
+                category: "breakfast-club",
+                categories: ["breakfast-club", "social"],
+                date: "2025-11-27",
+                time: "09:00 - 11:00",
+                startTime: "09:00",
+                endTime: "11:00",
+                location: "Sunderland, UK",
+                lat: 54.9069,
+                lng: -1.3838,
+                organizer: "VFVIC"
+            },
+            {
+                id: 16,
+                title: "Christmas Preparation Meeting",
+                description: "Planning meeting for Christmas events and activities. All veterans invited to contribute ideas and help organize festive celebrations.",
+                category: "meeting",
+                categories: ["meeting", "social"],
+                date: "2025-11-28",
+                time: "18:00 - 20:00",
+                startTime: "18:00",
+                endTime: "20:00",
+                location: "Gateshead, UK",
+                lat: 54.9537,
+                lng: -1.6103,
+                organizer: "VFVIC"
+            },
+            
+            // DECEMBER 2025 EVENTS
+            {
+                id: 17,
+                title: "Veterans Breakfast Club - Newcastle",
+                description: "First breakfast club of December. Start the festive month with good company and a hearty breakfast.",
+                category: "breakfast-club",
+                categories: ["breakfast-club", "social"],
+                date: "2025-12-04",
+                time: "09:00 - 11:00",
+                startTime: "09:00",
+                endTime: "11:00",
+                location: "Newcastle upon Tyne, UK",
+                lat: 54.9783,
+                lng: -1.6178,
+                organizer: "VFVIC"
+            },
+            {
+                id: 18,
+                title: "Veterans Drop-In Centre - Christmas Edition",
+                description: "Special Christmas-themed drop-in with festive treats. Advice services still available plus some holiday cheer.",
+                category: "drop-in",
+                categories: ["drop-in", "social"],
+                date: "2025-12-05",
+                time: "10:00 - 15:00",
+                startTime: "10:00",
+                endTime: "15:00",
+                location: "Sunderland, UK",
+                lat: 54.9069,
+                lng: -1.3838,
+                organizer: "VFVIC"
+            },
+            {
+                id: 19,
+                title: "Winter Wellness Workshop",
+                description: "Workshop on managing mental health during winter months. Coping strategies, support networks, and practical tips. Seasonal Affective Disorder information.",
+                category: "workshop",
+                categories: ["workshop", "mental-health", "wellbeing"],
+                date: "2025-12-06",
+                time: "13:00 - 16:00",
+                startTime: "13:00",
+                endTime: "16:00",
                 location: "Durham, UK",
                 lat: 54.7753,
                 lng: -1.5849,
+                organizer: "Combat Stress"
+            },
+            {
+                id: 20,
+                title: "Veterans Family Christmas Party",
+                description: "Christmas party for veterans and families. Santa visit for kids, festive food, entertainment, and games. Free event, all ages welcome.",
+                category: "social",
+                categories: ["social", "family"],
+                date: "2025-12-07",
+                time: "14:00 - 18:00",
+                startTime: "14:00",
+                endTime: "18:00",
+                location: "Middlesbrough, UK",
+                lat: 54.5742,
+                lng: -1.2349,
+                organizer: "VFVIC"
+            },
+            {
+                id: 21,
+                title: "PTSD Support Group - December",
+                description: "Monthly PTSD support group. Extra session available given holiday season can be challenging. Professional support and peer understanding.",
+                category: "support",
+                categories: ["support", "mental-health"],
+                date: "2025-12-10",
+                time: "18:00 - 20:00",
+                startTime: "18:00",
+                endTime: "20:00",
+                location: "Middlesbrough, UK",
+                lat: 54.5742,
+                lng: -1.2349,
+                organizer: "Combat Stress"
+            },
+            {
+                id: 22,
+                title: "Veterans Breakfast Club - Sunderland",
+                description: "Pre-Christmas breakfast gathering. Festive atmosphere, good food, great friends.",
+                category: "breakfast-club",
+                categories: ["breakfast-club", "social"],
+                date: "2025-12-11",
+                time: "09:00 - 11:00",
+                startTime: "09:00",
+                endTime: "11:00",
+                location: "Sunderland, UK",
+                lat: 54.9069,
+                lng: -1.3838,
+                organizer: "VFVIC"
+            },
+            {
+                id: 23,
+                title: "Christmas Wreath Making Workshop",
+                description: "Create your own Christmas wreath. All materials provided. Take home your creation. Refreshments included. Festive fun for all.",
+                category: "workshop",
+                categories: ["workshop", "social"],
+                date: "2025-12-12",
+                time: "14:00 - 17:00",
+                startTime: "14:00",
+                endTime: "17:00",
+                location: "Gateshead, UK",
+                lat: 54.9537,
+                lng: -1.6103,
+                organizer: "Royal British Legion"
+            },
+            {
+                id: 24,
+                title: "Friday Social - Christmas Special",
+                description: "Christmas-themed social evening. Festive decorations, seasonal music, Christmas quiz. Partners and families welcome. Festive buffet provided.",
+                category: "social",
+                categories: ["social"],
+                date: "2025-12-13",
+                time: "19:00 - 23:00",
+                startTime: "19:00",
+                endTime: "23:00",
+                location: "Gateshead, UK",
+                lat: 54.9537,
+                lng: -1.6103,
+                organizer: "Royal British Legion"
+            },
+            {
+                id: 25,
+                title: "Veterans Christmas Market Visit",
+                description: "Group trip to Newcastle Christmas Market. Meet at station, explore market together, optional lunch. Great way to get into festive spirit.",
+                category: "social",
+                categories: ["social"],
+                date: "2025-12-14",
+                time: "11:00 - 15:00",
+                startTime: "11:00",
+                endTime: "15:00",
+                location: "Newcastle upon Tyne, UK",
+                lat: 54.9783,
+                lng: -1.6178,
+                organizer: "VFVIC"
+            },
+            {
+                id: 26,
+                title: "Women Veterans Christmas Coffee",
+                description: "Christmas coffee morning for women veterans. Secret Santa (£5 limit), festive treats, and good conversation.",
+                category: "social",
+                categories: ["social"],
+                date: "2025-12-16",
+                time: "10:00 - 12:00",
+                startTime: "10:00",
+                endTime: "12:00",
+                location: "Newcastle upon Tyne, UK",
+                lat: 54.9783,
+                lng: -1.6178,
+                organizer: "VFVIC"
+            },
+            {
+                id: 27,
+                title: "Veterans Breakfast Club - Newcastle",
+                description: "Last breakfast club before Christmas. Extra special festive breakfast. Great way to connect before the holidays.",
+                category: "breakfast-club",
+                categories: ["breakfast-club", "social"],
+                date: "2025-12-18",
+                time: "09:00 - 11:00",
+                startTime: "09:00",
+                endTime: "11:00",
+                location: "Newcastle upon Tyne, UK",
+                lat: 54.9783,
+                lng: -1.6178,
+                organizer: "VFVIC"
+            },
+            {
+                id: 28,
+                title: "Christmas Day Lunch for Veterans",
+                description: "Full Christmas dinner for veterans who would otherwise be alone. Transport can be arranged. All veterans welcome, bring a plus one if needed.",
+                category: "social",
+                categories: ["social", "support"],
+                date: "2025-12-25",
+                time: "12:00 - 16:00",
+                startTime: "12:00",
+                endTime: "16:00",
+                location: "Durham, UK",
+                lat: 54.7753,
+                lng: -1.5849,
+                organizer: "VFVIC & Royal British Legion"
+            },
+            {
+                id: 29,
+                title: "Boxing Day Walk",
+                description: "Traditional Boxing Day countryside walk. Walk off the Christmas dinner! 6-mile route, moderate difficulty. Finish at country pub.",
+                category: "sport",
+                categories: ["sport", "social", "health"],
+                date: "2025-12-26",
+                time: "10:30 - 14:00",
+                startTime: "10:30",
+                endTime: "14:00",
+                location: "Hexham, UK",
+                lat: 54.9708,
+                lng: -2.1008,
+                organizer: "Walking With The Wounded"
+            },
+            {
+                id: 30,
+                title: "New Year Planning Meeting",
+                description: "Planning meeting for 2026 events and activities. Share your ideas for next year. All veterans invited to help shape our program.",
+                category: "meeting",
+                categories: ["meeting"],
+                date: "2025-12-30",
+                time: "14:00 - 16:00",
+                startTime: "14:00",
+                endTime: "16:00",
+                location: "Newcastle upon Tyne, UK",
+                lat: 54.9783,
+                lng: -1.6178,
                 organizer: "VFVIC"
             }
         ];
-
-        this.filteredEvents = [...this.events];
-        this.initMap();
-        this.populateCategoryFilter();
-        this.displayEvents();
-        this.setupEventListeners();
+        
+        // Note: Don't call initMap(), displayEvents(), etc. here
+        // These are called by the init() method which invokes loadSampleEvents()
     }
 
     showSampleDataNotification() {
@@ -1195,18 +1589,36 @@ class EventMap {
     }
 
     setupEventListeners() {
-        // Search functionality
+        // Search functionality with debouncing
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
 
         const performSearch = async () => {
-            const query = searchInput.value.toLowerCase();
+            // Validate and sanitize search input
+            const rawQuery = searchInput.value;
+            const sanitizedQuery = this.utils?.validateSearchInput(rawQuery) || rawQuery.trim();
+            searchInput.value = sanitizedQuery; // Update input with sanitized value
             await this.filterEvents();
         };
 
+        // Create debounced version of filter for typing
+        const debouncedFilter = this.utils?.debounce(
+            () => this.filterEvents(),
+            this.utils.CONFIG.DEBOUNCE_DELAY
+        ) || (() => this.filterEvents());
+
+        // Real-time search as user types (debounced)
+        searchInput.addEventListener('input', debouncedFilter);
+        
+        // Immediate search on button click
         searchBtn.addEventListener('click', performSearch);
+        
+        // Search on Enter key
         searchInput.addEventListener('keypress', async (e) => {
-            if (e.key === 'Enter') await performSearch();
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                await performSearch();
+            }
         });
 
         // Filter functionality
