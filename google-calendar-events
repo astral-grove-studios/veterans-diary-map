@@ -1,953 +1,211 @@
-{{ "items": [ "items": [
-
-  "items": [
-
-    { "items": [
-
-      "kind": "calendar#event",
-
-      "id": "breakfast_newcastle_20251106",  {  {  {
-
-      "summary": "Veterans Breakfast Club - Newcastle",
-
-      "description": "Weekly breakfast meetup for veterans in Newcastle. Come and join fellow veterans for a friendly chat over breakfast. All veterans and serving personnel welcome.",   "kind": "calendar#event",
-
-      "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",
-
-      "start": {   "id": "breakfast_newcastle_20251106",   "kind": "calendar#event",   "kind": "calendar#event",
-
-        "dateTime": "2025-11-06T09:00:00+00:00",
-
-        "timeZone": "Europe/London"   "summary": "Veterans Breakfast Club - Newcastle",
-
-      },
-
-      "end": {   "description": "Weekly breakfast meetup for veterans in Newcastle. Come and join fellow veterans for a friendly chat over breakfast. All veterans and serving personnel welcome. Free breakfast provided.",   "etag": "\"3456789012340000\"",   "etag": "\"3433817233780000\"",
-
-        "dateTime": "2025-11-06T11:00:00+00:00",
-
-        "timeZone": "Europe/London"   "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",
-
-      }
-
-    },   "start": {   "id": "breakfast_newcastle_20251106",   "id": "2470d77l7j57urnlvcevna90kc_20251014T180000Z",
-
-    {
-
-      "kind": "calendar#event",    "dateTime": "2025-11-06T09:00:00+00:00",
-
-      "id": "dropin_sunderland_20251107",
-
-      "summary": "Veterans Drop-In Centre",    "timeZone": "Europe/London"   "status": "confirmed",   "status": "confirmed",
-
-      "description": "Open drop-in centre for veterans needing support, advice, or just a chat. Free tea and coffee available.",
-
-      "location": "Sunderland Minster, High Street West, Sunderland SR1 3ET, UK",   },
-
-      "start": {
-
-        "dateTime": "2025-11-07T10:00:00+00:00",   "end": {   "summary": "Veterans Breakfast Club - Newcastle",   "htmlLink": "https://www.google.com/calendar/event?eid=MjQ3MGQ3N2w3ajU3dXJubHZjZXZuYTkwa2NfMjAyNTEwMTRUMTgwMDAwWiB2ZXRlcmFuc2RpYXJ5bm9ydGhlYXN0QG0&ctz=Europe/London",
-
-        "timeZone": "Europe/London"
-
-      },    "dateTime": "2025-11-06T11:00:00+00:00",
-
-      "end": {
-
-        "dateTime": "2025-11-07T15:00:00+00:00",    "timeZone": "Europe/London"   "description": "Weekly breakfast meetup for veterans in Newcastle. Come and join fellow veterans for a friendly chat over breakfast. All veterans and serving personnel welcome. Free breakfast provided.",   "created": "2024-05-28T14:58:41.000Z",
-
-        "timeZone": "Europe/London"
-
-      }   }
-
-    },
-
-    {  },   "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",   "updated": "2024-05-28T15:03:36.890Z",
-
-      "kind": "calendar#event",
-
-      "id": "remembrance_durham_20251111",  {
-
-      "summary": "Remembrance Day Service",
-
-      "description": "Annual Remembrance Day parade and service at Durham Cathedral. All veterans invited to march.",   "kind": "calendar#event",   "creator": {   "summary": "Royal British Legion Hebburn Branch Meeting",
-
-      "location": "Durham Cathedral, The College, Durham DH1 3EH, UK",
-
-      "start": {   "id": "dropin_sunderland_20251107",
-
-        "dateTime": "2025-11-11T10:00:00+00:00",
-
-        "timeZone": "Europe/London"   "summary": "Veterans Drop-In Centre",    "email": "veteransdiarynortheast@gmail.com",   "description": "Monthly branch meeting.",
-
-      },
-
-      "end": {   "description": "Open drop-in centre for veterans needing support, advice, or just a chat. Free tea and coffee. Benefits advice available.",
-
-        "dateTime": "2025-11-11T12:00:00+00:00",
-
-        "timeZone": "Europe/London"   "location": "Sunderland Minster, High Street West, Sunderland SR1 3ET, UK",    "self": true   "location": "Hebburn Iona Social Club, Station Rd, Hebburn NE31 1PN, UK",
-
-      }
-
-    },   "start": {
-
-    {
-
-      "kind": "calendar#event",    "dateTime": "2025-11-07T10:00:00+00:00"   },   "creator": {
-
-      "id": "breakfast_sunderland_20251113",
-
-      "summary": "East Durham Veterans Breakfast",   },
-
-      "description": "Free veterans breakfast. Great opportunity to socialise and meet new people.",
-
-      "location": "East Durham Veterans Hub, Church Street, Seaham SR7 7HF, UK",   "end": {   "organizer": {    "email": "veteransdiarynortheast@gmail.com",
-
-      "start": {
-
-        "dateTime": "2025-11-13T09:00:00+00:00",    "dateTime": "2025-11-07T15:00:00+00:00"
-
-        "timeZone": "Europe/London"
-
-      },   }    "email": "veteransdiarynortheast@gmail.com",    "self": true
-
-      "end": {
-
-        "dateTime": "2025-11-13T11:00:00+00:00",  },
-
-        "timeZone": "Europe/London"
-
-      }  {    "self": true   },
-
-    },
-
-    {   "kind": "calendar#event",
-
-      "kind": "calendar#event",
-
-      "id": "employment_workshop_20251114",   "id": "remembrance_durham_20251111",   },   "organizer": {
-
-      "summary": "Veterans Employment Workshop",
-
-      "description": "CV writing, interview skills, and job search strategies. Connect with veteran-friendly employers.",   "summary": "Remembrance Day Service & Parade",
-
-      "location": "Veterans Gateway Centre, Pilgrim Street, Newcastle upon Tyne NE1 6QG, UK",
-
-      "start": {   "description": "Annual Remembrance Day parade and service at Durham Cathedral. All veterans invited to march. Standards will be paraded. Wreath laying ceremony.",   "start": {    "email": "veteransdiarynortheast@gmail.com",
-
-        "dateTime": "2025-11-14T10:00:00+00:00",
-
-        "timeZone": "Europe/London"   "location": "Durham Cathedral, The College, Durham DH1 3EH, UK",
-
-      },
-
-      "end": {   "start": {    "dateTime": "2025-11-06T09:00:00+00:00",    "self": true
-
-        "dateTime": "2025-11-14T15:00:00+00:00",
-
-        "timeZone": "Europe/London"    "dateTime": "2025-11-11T10:00:00+00:00"
-
-      }
-
-    },   },    "timeZone": "Europe/London"   },
-
-    {
-
-      "kind": "calendar#event",   "end": {
-
-      "id": "rbl_social_20251115",
-
-      "summary": "Friday Social at RBL",    "dateTime": "2025-11-11T12:00:00+00:00"   },   "start": {
-
-      "description": "Weekly social evening. Pool, darts, dominoes and good conversation. Partners and families welcome.",
-
-      "location": "Royal British Legion Gateshead, 23 Rectory Road, Gateshead NE8 4DN, UK",   }
-
-      "start": {
-
-        "dateTime": "2025-11-15T19:00:00+00:00",  },   "end": {    "dateTime": "2025-10-14T19:00:00+01:00",
-
-        "timeZone": "Europe/London"
-
-      },  {
-
-      "end": {
-
-        "dateTime": "2025-11-15T23:00:00+00:00",   "kind": "calendar#event",    "dateTime": "2025-11-06T11:00:00+00:00",    "timeZone": "Europe/London"
-
-        "timeZone": "Europe/London"
-
-      }   "id": "breakfast_sunderland_20251113",
-
-    },
-
-    {   "summary": "East Durham Veterans Breakfast Club",    "timeZone": "Europe/London"   },
-
-      "kind": "calendar#event",
-
-      "id": "walking_group_20251116",   "description": "Free veterans breakfast. Great opportunity to socialise and meet new people in a comfortable environment.",
-
-      "summary": "Veterans Walking Group",
-
-      "description": "Moderate 5-mile countryside walk. All fitness levels welcome. Dogs welcome on leads.",   "location": "East Durham Veterans Hub, Church Street, Seaham SR7 7HF, UK",   },   "end": {
-
-      "location": "Kielder Castle, Kielder, Hexham NE48 1ER, UK",
-
-      "start": {   "start": {
-
-        "dateTime": "2025-11-16T10:00:00+00:00",
-
-        "timeZone": "Europe/London"    "dateTime": "2025-11-13T09:00:00+00:00"   "eventType": "default"    "dateTime": "2025-10-14T20:30:00+01:00",
-
-      },
-
-      "end": {   },
-
-        "dateTime": "2025-11-16T13:00:00+00:00",
-
-        "timeZone": "Europe/London"   "end": {  },    "timeZone": "Europe/London"
-
-      }
-
-    },    "dateTime": "2025-11-13T11:00:00+00:00"
-
-    {
-
-      "kind": "calendar#event",   }  {   },
-
-      "id": "women_veterans_20251121",
-
-      "summary": "Women Veterans Coffee Morning",  },
-
-      "description": "Safe space for women veterans to share experiences and build connections.",
-
-      "location": "Veterans Gateway Centre, Pilgrim Street, Newcastle upon Tyne NE1 6QG, UK",  {   "kind": "calendar#event",   "recurringEventId": "2470d77l7j57urnlvcevna90kc",
-
-      "start": {
-
-        "dateTime": "2025-11-21T10:00:00+00:00",   "kind": "calendar#event",
-
-        "timeZone": "Europe/London"
-
-      },   "id": "employment_workshop_20251114",   "etag": "\"3456789012340001\"",   "originalStartTime": {
-
-      "end": {
-
-        "dateTime": "2025-11-21T12:00:00+00:00",   "summary": "Veterans Employment Workshop",
-
-        "timeZone": "Europe/London"
-
-      }   "description": "CV writing, interview skills, and job search strategies. Connect with veteran-friendly employers. Free lunch provided.",   "id": "dropin_sunderland_20251107",    "dateTime": "2025-10-14T19:00:00+01:00",
-
-    },
-
-    {   "location": "Veterans Gateway Centre, Pilgrim Street, Newcastle upon Tyne NE1 6QG, UK",
-
-      "kind": "calendar#event",
-
-      "id": "xmas_party_20251207",   "start": {   "status": "confirmed",    "timeZone": "Europe/London"
-
-      "summary": "Veterans Family Christmas Party",
-
-      "description": "Christmas party with Santa visit for kids, festive food and entertainment. Free event for all veterans and families.",    "dateTime": "2025-11-14T10:00:00+00:00"
-
-      "location": "Middlesbrough Town Hall, Albert Road, Middlesbrough TS1 2QH, UK",
-
-      "start": {   },   "summary": "Veterans Drop-In Centre",   },
-
-        "dateTime": "2025-12-07T14:00:00+00:00",
-
-        "timeZone": "Europe/London"   "end": {
-
-      },
-
-      "end": {    "dateTime": "2025-11-14T15:00:00+00:00"   "description": "Open drop-in centre for veterans needing support, advice, or just a chat. Free tea and coffee. Benefits advice available. No appointment necessary.",   "iCalUID": "2470d77l7j57urnlvcevna90kc@google.com",
-
-        "dateTime": "2025-12-07T18:00:00+00:00",
-
-        "timeZone": "Europe/London"   }
-
-      }
-
-    },  },   "location": "Sunderland Minster, High Street West, Sunderland SR1 3ET, UK",   "sequence": 1,
-
-    {
-
-      "kind": "calendar#event",  {
-
-      "id": "breakfast_xmas_20251218",
-
-      "summary": "Veterans Christmas Breakfast",   "kind": "calendar#event",   "start": {   "reminders": {
-
-      "description": "Last breakfast before Christmas. Extra special festive breakfast.",
-
-      "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",   "id": "rbl_social_20251115",
-
-      "start": {
-
-        "dateTime": "2025-12-18T09:00:00+00:00",   "summary": "Friday Social at Royal British Legion",    "dateTime": "2025-11-07T10:00:00+00:00",    "useDefault": true
-
-        "timeZone": "Europe/London"
-
-      },   "description": "Weekly social evening. Pool, darts, dominoes and good conversation. Partners and families welcome.",
-
-      "end": {
-
-        "dateTime": "2025-12-18T11:00:00+00:00",   "location": "Royal British Legion Gateshead, 23 Rectory Road, Gateshead NE8 4DN, UK",    "timeZone": "Europe/London"   },
-
-        "timeZone": "Europe/London"
-
-      }   "start": {
-
-    },
-
-    {    "dateTime": "2025-11-15T19:00:00+00:00"   },   "eventType": "default"
-
-      "kind": "calendar#event",
-
-      "id": "xmas_day_lunch_20251225",   },
-
-      "summary": "Christmas Day Lunch",
-
-      "description": "Full Christmas dinner for veterans. Transport available. MUST BOOK by Dec 20th.",   "end": {   "end": {  },
-
-      "location": "Durham County Hall, County Hall, Durham DH1 5UL, UK",
-
-      "start": {    "dateTime": "2025-11-15T23:00:00+00:00"
-
-        "dateTime": "2025-12-25T12:00:00+00:00",
-
-        "timeZone": "Europe/London"   }    "dateTime": "2025-11-07T15:00:00+00:00",  {
-
-      },
-
-      "end": {  },
-
-        "dateTime": "2025-12-25T16:00:00+00:00",
-
-        "timeZone": "Europe/London"  {    "timeZone": "Europe/London"   "kind": "calendar#event",
-
-      }
-
-    },   "kind": "calendar#event",
-
-    {
-
-      "kind": "calendar#event",   "id": "walking_group_20251116",   },   "etag": "\"3433817233780000\"",
-
-      "id": "boxing_day_walk_20251226",
-
-      "summary": "Boxing Day Walk",   "summary": "Veterans Walking Group - Kielder Forest",
-
-      "description": "6-mile walk around Kielder Water. Dogs welcome.",
-
-      "location": "Kielder Castle, Kielder, Hexham NE48 1ER, UK",   "description": "Moderate 5-mile countryside walk. All fitness levels welcome. Dogs welcome on leads. Meet at Kielder Castle car park.",   "eventType": "default"   "id": "31sp0c32b8frjo8u556cii171b_20251004T093000Z",
-
-      "start": {
-
-        "dateTime": "2025-12-26T10:30:00+00:00",   "location": "Kielder Castle, Kielder, Hexham NE48 1ER, UK",
-
-        "timeZone": "Europe/London"
-
-      },   "start": {  },   "status": "confirmed",
-
-      "end": {
-
-        "dateTime": "2025-12-26T14:00:00+00:00",    "dateTime": "2025-11-16T10:00:00+00:00"
-
-        "timeZone": "Europe/London"
-
-      }   },  {   "htmlLink": "https://www.google.com/calendar/event?eid=MzFzcDBjMzJiOGZyam84dTU1NmNpaTE3MWJfMjAyNTEwMDRUMDkzMDAwWiB2ZXRlcmFuc2RpYXJ5bm9ydGhlYXN0QG0&ctz=Europe/London",
-
-    }
-
-  ]   "end": {
-
-}
-
-    "dateTime": "2025-11-16T13:00:00+00:00"   "kind": "calendar#event",   "created": "2024-05-28T14:58:41.000Z",
-
-   }
-
-  },   "id": "remembrance_durham_20251111",   "updated": "2024-05-28T15:03:36.890Z",
-
+ "items": [
   {
-
-   "kind": "calendar#event",   "summary": "Remembrance Day Service & Parade",   "summary": "East Durham Veterans Breakfast Club",
-
-   "id": "art_therapy_20251118",
-
-   "summary": "Veterans Art Therapy Session",   "description": "Annual Remembrance Day parade and service at Durham Cathedral. All veterans invited to march.",   "description": "\u003cp\u003eBreakfast Club is a free veterans and families breakfast served up at our hub which aims to not only aid our veterans financially during the cost of living crisis but also to allow them the opportunity to socialise and meet new people in a comfortable and friendly environment.Â  We provide this opportunity on the first Saturday of every month at 10:30 am. This is a great way for our veterans and their friends to meet, socialise and enjoy a free breakfast cooked up by our very own chef .\u003c/p\u003e\u003cp\u003eâ\u0080\u008b\u003c/p\u003e",
-
-   "description": "Creative art therapy for wellbeing. No art experience needed. All materials provided.",
-
-   "location": "Durham County Hall, County Hall, Durham DH1 5UL, UK",   "location": "Durham Cathedral, The College, Durham DH1 3EH, UK",   "location": "Dawdon Youth and Community Centre, Queen Alexandra Rd, Seaham SR7 7NH, UK",
-
-   "start": {
-
-    "dateTime": "2025-11-18T13:00:00+00:00"   "start": {   "creator": {
-
-   },
-
-   "end": {    "dateTime": "2025-11-11T10:00:00+00:00"    "email": "veteransdiarynortheast@gmail.com",
-
-    "dateTime": "2025-11-18T15:00:00+00:00"
-
-   }   },    "self": true
-
-  },
-
-  {   "end": {   },
-
    "kind": "calendar#event",
-
-   "id": "covenant_meeting_20251119",    "dateTime": "2025-11-11T12:00:00+00:00"   "organizer": {
-
-   "summary": "Armed Forces Covenant Meeting",
-
-   "description": "Quarterly meeting to discuss local support for armed forces community. Open to all veterans and service providers.",   }    "email": "veteransdiarynortheast@gmail.com",
-
-   "location": "Middlesbrough Town Hall, Albert Road, Middlesbrough TS1 2QH, UK",
-
-   "start": {  },    "self": true
-
-    "dateTime": "2025-11-19T14:00:00+00:00"
-
-   },  {   },
-
+   "etag": "\"3433817233780000\"",
+   "id": "2470d77l7j57urnlvcevna90kc_20251014T180000Z",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=MjQ3MGQ3N2w3ajU3dXJubHZjZXZuYTkwa2NfMjAyNTEwMTRUMTgwMDAwWiB2ZXRlcmFuc2RpYXJ5bm9ydGhlYXN0QG0&ctz=Europe/London",
+   "created": "2024-05-28T14:58:41.000Z",
+   "updated": "2024-05-28T15:03:36.890Z",
+   "summary": "Royal British Legion Hebburn Branch Meeting",
+   "description": "Monthly branch meeting.",
+   "location": "Hebburn Iona Social Club, Station Rd, Hebburn NE31 1PN, UK",
+   "creator": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
+   },
+   "start": {
+    "dateTime": "2025-10-14T19:00:00+01:00",
+    "timeZone": "Europe/London"
+   },
    "end": {
-
-    "dateTime": "2025-11-19T16:00:00+00:00"   "kind": "calendar#event",   "start": {
-
-   }
-
-  },   "id": "breakfast_sunderland_20251113",    "dateTime": "2025-10-04T10:30:00+01:00",
-
-  {
-
-   "kind": "calendar#event",   "summary": "East Durham Veterans Breakfast Club",    "timeZone": "Europe/London"
-
-   "id": "breakfast_newcastle_20251120",
-
-   "summary": "Veterans Breakfast Club - Newcastle",   "description": "Free veterans breakfast. Great opportunity to socialise and meet new people.",   },
-
-   "description": "Weekly breakfast meetup. Informal gathering, no agenda, just good company.",
-
-   "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",   "location": "East Durham Veterans Hub, Church Street, Seaham SR7 7HF, UK",   "end": {
-
-   "start": {
-
-    "dateTime": "2025-11-20T09:00:00+00:00"   "start": {    "dateTime": "2025-10-04T11:30:00+01:00",
-
+    "dateTime": "2025-10-14T20:30:00+01:00",
+    "timeZone": "Europe/London"
    },
-
-   "end": {    "dateTime": "2025-11-13T09:00:00+00:00"    "timeZone": "Europe/London"
-
-    "dateTime": "2025-11-20T11:00:00+00:00"
-
-   }   },   },
-
-  },
-
-  {   "end": {   "recurringEventId": "31sp0c32b8frjo8u556cii171b",
-
-   "kind": "calendar#event",
-
-   "id": "women_veterans_20251121",    "dateTime": "2025-11-13T11:00:00+00:00"   "originalStartTime": {
-
-   "summary": "Women Veterans Coffee Morning",
-
-   "description": "Safe space for women veterans to share experiences and build connections. Childcare available if booked in advance.",   }    "dateTime": "2025-10-04T10:30:00+01:00",
-
-   "location": "Veterans Gateway Centre, Pilgrim Street, Newcastle upon Tyne NE1 6QG, UK",
-
-   "start": {  },    "timeZone": "Europe/London"
-
-    "dateTime": "2025-11-21T10:00:00+00:00"
-
-   },  {   },
-
-   "end": {
-
-    "dateTime": "2025-11-21T12:00:00+00:00"   "kind": "calendar#event",   "iCalUID": "31sp0c32b8frjo8u556cii171b@google.com",
-
-   }
-
-  },   "id": "employment_workshop_20251114",   "sequence": 1,
-
-  {
-
-   "kind": "calendar#event",   "summary": "Veterans Employment Workshop",   "reminders": {
-
-   "id": "football_sunderland_20251122",
-
-   "summary": "Veterans Five-a-Side Football",   "description": "CV writing, interview skills, job search strategies. Connect with veteran-friendly employers.",    "useDefault": true
-
-   "description": "Weekly football for veterans. All abilities welcome. Indoor pitch, changing facilities available.",
-
-   "location": "Sunderland Tennis Centre, Silksworth Lane, Sunderland SR3 2PD, UK",   "location": "Veterans Gateway Centre, Pilgrim Street, Newcastle upon Tyne NE1 6QG, UK",   },
-
-   "start": {
-
-    "dateTime": "2025-11-22T14:00:00+00:00"   "start": {   "eventType": "default"
-
+   "recurringEventId": "2470d77l7j57urnlvcevna90kc",
+   "originalStartTime": {
+    "dateTime": "2025-10-14T19:00:00+01:00",
+    "timeZone": "Europe/London"
    },
-
-   "end": {    "dateTime": "2025-11-14T10:00:00+00:00"  },
-
-    "dateTime": "2025-11-22T16:00:00+00:00"
-
-   }   },  {
-
-  },
-
-  {   "end": {   "kind": "calendar#event",
-
-   "kind": "calendar#event",
-
-   "id": "dropin_hartlepool_20251125",    "dateTime": "2025-11-14T15:00:00+00:00"   "etag": "\"3433817233780000\"",
-
-   "summary": "Hartlepool Veterans Drop-In",
-
-   "description": "Weekly drop-in for advice, support, and companionship. Benefits experts available.",   }   "id": "31sp0c32b8frjo8u556cii171b_20251101T103000Z",
-
-   "location": "Hartlepool Borough Hall, Raby Road, Hartlepool TS24 8AH, UK",
-
-   "start": {  },   "status": "confirmed",
-
-    "dateTime": "2025-11-25T10:00:00+00:00"
-
-   },  {   "htmlLink": "https://www.google.com/calendar/event?eid=MzFzcDBjMzJiOGZyam84dTU1NmNpaTE3MWJfMjAyNTExMDFUMTAzMDAwWiB2ZXRlcmFuc2RpYXJ5bm9ydGhlYXN0QG0&ctz=Europe/London",
-
-   "end": {
-
-    "dateTime": "2025-11-25T15:00:00+00:00"   "kind": "calendar#event",   "created": "2024-05-28T14:58:41.000Z",
-
-   }
-
-  },   "id": "walking_group_20251116",   "updated": "2024-05-28T15:03:36.890Z",
-
-  {
-
-   "kind": "calendar#event",   "summary": "Veterans Walking Group - Kielder Forest",   "summary": "East Durham Veterans Breakfast Club",
-
-   "id": "breakfast_sunderland_20251127",
-
-   "summary": "East Durham Veterans Breakfast Club",   "description": "Moderate 5-mile countryside walk. All fitness levels welcome. Dogs welcome on leads.",   "description": "\u003cp\u003eBreakfast Club is a free veterans and families breakfast served up at our hub which aims to not only aid our veterans financially during the cost of living crisis but also to allow them the opportunity to socialise and meet new people in a comfortable and friendly environment.Â  We provide this opportunity on the first Saturday of every month at 10:30 am. This is a great way for our veterans and their friends to meet, socialise and enjoy a free breakfast cooked up by our very own chef .\u003c/p\u003e\u003cp\u003eâ\u0080\u008b\u003c/p\u003e",
-
-   "description": "Weekly breakfast gathering. Great food, friendly faces, supportive atmosphere.",
-
-   "location": "East Durham Veterans Hub, Church Street, Seaham SR7 7HF, UK",   "location": "Kielder Castle, Kielder, Hexham NE48 1ER, UK",   "location": "Dawdon Youth and Community Centre, Queen Alexandra Rd, Seaham SR7 7NH, UK",
-
-   "start": {
-
-    "dateTime": "2025-11-27T09:00:00+00:00"   "start": {   "creator": {
-
+   "iCalUID": "2470d77l7j57urnlvcevna90kc@google.com",
+   "sequence": 1,
+   "reminders": {
+    "useDefault": true
    },
-
-   "end": {    "dateTime": "2025-11-16T10:00:00+00:00"    "email": "veteransdiarynortheast@gmail.com",
-
-    "dateTime": "2025-11-27T11:00:00+00:00"
-
-   }   },    "self": true
-
+   "eventType": "default"
   },
-
-  {   "end": {   },
-
-   "kind": "calendar#event",
-
-   "id": "xmas_planning_20251128",    "dateTime": "2025-11-16T13:00:00+00:00"   "organizer": {
-
-   "summary": "Christmas Events Planning Meeting",
-
-   "description": "Planning meeting for Christmas events. All veterans invited to contribute ideas and help organize.",   }    "email": "veteransdiarynortheast@gmail.com",
-
-   "location": "Royal British Legion Gateshead, 23 Rectory Road, Gateshead NE8 4DN, UK",
-
-   "start": {  },    "self": true
-
-    "dateTime": "2025-11-28T18:00:00+00:00"
-
-   },  {   },
-
-   "end": {
-
-    "dateTime": "2025-11-28T20:00:00+00:00"   "kind": "calendar#event",   "start": {
-
-   }
-
-  },   "id": "breakfast_newcastle_20251120",    "dateTime": "2025-11-01T10:30:00Z",
-
   {
-
-   "kind": "calendar#event",   "summary": "Veterans Breakfast Club - Newcastle",    "timeZone": "Europe/London"
-
-   "id": "breakfast_newcastle_20251204",
-
-   "summary": "Veterans Breakfast Club - Newcastle (Festive)",   "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",   },
-
-   "description": "First breakfast club of December. Start the festive month with good company.",
-
-   "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",   "start": {   "end": {
-
-   "start": {
-
-    "dateTime": "2025-12-04T09:00:00+00:00"    "dateTime": "2025-11-20T09:00:00+00:00"    "dateTime": "2025-11-01T11:30:00Z",
-
-   },
-
-   "end": {   },    "timeZone": "Europe/London"
-
-    "dateTime": "2025-12-04T11:00:00+00:00"
-
-   }   "end": {   },
-
-  },
-
-  {    "dateTime": "2025-11-20T11:00:00+00:00"   "recurringEventId": "31sp0c32b8frjo8u556cii171b",
-
    "kind": "calendar#event",
-
-   "id": "dropin_xmas_20251205",   }   "originalStartTime": {
-
-   "summary": "Veterans Drop-In - Christmas Special",
-
-   "description": "Christmas-themed drop-in with festive treats, mince pies and mulled wine. Advice services still available.",  },    "dateTime": "2025-11-01T10:30:00Z",
-
-   "location": "Sunderland Minster, High Street West, Sunderland SR1 3ET, UK",
-
-   "start": {  {    "timeZone": "Europe/London"
-
-    "dateTime": "2025-12-05T10:00:00+00:00"
-
-   },   "kind": "calendar#event",   },
-
-   "end": {
-
-    "dateTime": "2025-12-05T15:00:00+00:00"   "id": "women_veterans_20251121",   "iCalUID": "31sp0c32b8frjo8u556cii171b@google.com",
-
-   }
-
-  },   "summary": "Women Veterans Coffee Morning",   "sequence": 1,
-
-  {
-
-   "kind": "calendar#event",   "description": "Safe space for women veterans to share experiences and build connections.",   "reminders": {
-
-   "id": "wellness_workshop_20251206",
-
-   "summary": "Winter Wellness Workshop",   "location": "Veterans Gateway Centre, Pilgrim Street, Newcastle upon Tyne NE1 6QG, UK",    "useDefault": true
-
-   "description": "Workshop on managing mental health during winter months. Coping strategies for seasonal affective disorder.",
-
-   "location": "Durham County Hall, County Hall, Durham DH1 5UL, UK",   "start": {   },
-
-   "start": {
-
-    "dateTime": "2025-12-06T13:00:00+00:00"    "dateTime": "2025-11-21T10:00:00+00:00"   "eventType": "default"
-
-   },
-
-   "end": {   },  },
-
-    "dateTime": "2025-12-06T16:00:00+00:00"
-
-   }   "end": {  {
-
-  },
-
-  {    "dateTime": "2025-11-21T12:00:00+00:00"   "kind": "calendar#event",
-
-   "kind": "calendar#event",
-
-   "id": "family_xmas_party_20251207",   }   "etag": "\"3433817233780000\"",
-
-   "summary": "Veterans Family Christmas Party",
-
-   "description": "Christmas party with Santa visit for kids, festive food, entertainment and games. Free event for all veterans and families.",  },   "id": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500_20250930T181500Z",
-
-   "location": "Middlesbrough Town Hall, Albert Road, Middlesbrough TS1 2QH, UK",
-
-   "start": {  {   "status": "confirmed",
-
-    "dateTime": "2025-12-07T14:00:00+00:00"
-
-   },   "kind": "calendar#event",   "htmlLink": "https://www.google.com/calendar/event?eid=M2NmM3V2aGdqY2tjcWh0YWc5MnRwa3U2OWdyMjAyNDA0MzBUMTgxNTAwXzIwMjUwOTMwVDE4MTUwMFogdmV0ZXJhbnNkaWFyeW5vcnRoZWFzdEBt&ctz=Europe/London",
-
-   "end": {
-
-    "dateTime": "2025-12-07T18:00:00+00:00"   "id": "breakfast_newcastle_20251204",   "created": "2024-05-28T14:58:41.000Z",
-
-   }
-
-  },   "summary": "Veterans Breakfast Club - Newcastle (Festive)",   "updated": "2024-05-28T15:03:36.890Z",
-
-  {
-
-   "kind": "calendar#event",   "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",   "summary": "DLI association meeting",
-
-   "id": "ptsd_december_20251210",
-
-   "summary": "PTSD Support Group",   "start": {   "description": "The meeting starts at 20:00hrs in the lounge bar. Members normally attend for 19:00hrs onwards",
-
-   "description": "Monthly PTSD support group. Extra session available as holiday season can be challenging. Professional support available.",
-
-   "location": "Middlesbrough Central Library, Victoria Square, Middlesbrough TS1 2AY, UK",    "dateTime": "2025-12-04T09:00:00+00:00"   "location": "The Royal British Legion, 9 Queen St, South Shields NE33 1HL, UK",
-
-   "start": {
-
-    "dateTime": "2025-12-10T18:00:00+00:00"   },   "creator": {
-
-   },
-
-   "end": {   "end": {    "email": "veteransdiarynortheast@gmail.com",
-
-    "dateTime": "2025-12-10T20:00:00+00:00"
-
-   }    "dateTime": "2025-12-04T11:00:00+00:00"    "self": true
-
-  },
-
-  {   }   },
-
-   "kind": "calendar#event",
-
-   "id": "breakfast_sunderland_20251211",  },   "organizer": {
-
+   "etag": "\"3433817233780000\"",
+   "id": "31sp0c32b8frjo8u556cii171b_20251004T093000Z",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=MzFzcDBjMzJiOGZyam84dTU1NmNpaTE3MWJfMjAyNTEwMDRUMDkzMDAwWiB2ZXRlcmFuc2RpYXJ5bm9ydGhlYXN0QG0&ctz=Europe/London",
+   "created": "2024-05-28T14:58:41.000Z",
+   "updated": "2024-05-28T15:03:36.890Z",
    "summary": "East Durham Veterans Breakfast Club",
-
-   "description": "Pre-Christmas breakfast with festive menu.",  {    "email": "veteransdiarynortheast@gmail.com",
-
-   "location": "East Durham Veterans Hub, Church Street, Seaham SR7 7HF, UK",
-
-   "start": {   "kind": "calendar#event",    "self": true
-
-    "dateTime": "2025-12-11T09:00:00+00:00"
-
-   },   "id": "family_xmas_party_20251207",   },
-
-   "end": {
-
-    "dateTime": "2025-12-11T11:00:00+00:00"   "summary": "Veterans Family Christmas Party",   "start": {
-
-   }
-
-  },   "description": "Christmas party with Santa, food, entertainment. All veterans and families welcome.",    "dateTime": "2025-09-30T19:15:00+01:00",
-
-  {
-
-   "kind": "calendar#event",   "location": "Middlesbrough Town Hall, Albert Road, Middlesbrough TS1 2QH, UK",    "timeZone": "Europe/London"
-
-   "id": "wreath_making_20251212",
-
-   "summary": "Christmas Wreath Making Workshop",   "start": {   },
-
-   "description": "Create your own Christmas wreath. All materials provided. Limited spaces - book early!",
-
-   "location": "Royal British Legion Gateshead, 23 Rectory Road, Gateshead NE8 4DN, UK",    "dateTime": "2025-12-07T14:00:00+00:00"   "end": {
-
-   "start": {
-
-    "dateTime": "2025-12-12T14:00:00+00:00"   },    "dateTime": "2025-09-30T23:00:00+01:00",
-
+   "description": "\u003cp\u003eBreakfast Club is a free veterans and families breakfast served up at our hub which aims to not only aid our veterans financially during the cost of living crisis but also to allow them the opportunity to socialise and meet new people in a comfortable and friendly environment.Â  We provide this opportunity on the first Saturday of every month at 10:30 am. This is a great way for our veterans and their friends to meet, socialise and enjoy a free breakfast cooked up by our very own chef .\u003c/p\u003e\u003cp\u003eâ\u0080\u008b\u003c/p\u003e",
+   "location": "Dawdon Youth and Community Centre, Queen Alexandra Rd, Seaham SR7 7NH, UK",
+   "creator": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
    },
-
-   "end": {   "end": {    "timeZone": "Europe/London"
-
-    "dateTime": "2025-12-12T17:00:00+00:00"
-
-   }    "dateTime": "2025-12-07T18:00:00+00:00"   },
-
-  },
-
-  {   }   "recurringEventId": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500",
-
-   "kind": "calendar#event",
-
-   "id": "xmas_social_20251213",  },   "originalStartTime": {
-
-   "summary": "Friday Social - Christmas Special",
-
-   "description": "Christmas-themed social with festive decorations, seasonal music, Christmas quiz. Festive buffet provided.",  {    "dateTime": "2025-09-30T19:15:00+01:00",
-
-   "location": "Royal British Legion Gateshead, 23 Rectory Road, Gateshead NE8 4DN, UK",
-
-   "start": {   "kind": "calendar#event",    "timeZone": "Europe/London"
-
-    "dateTime": "2025-12-13T19:00:00+00:00"
-
-   },   "id": "xmas_day_lunch_20251225",   },
-
-   "end": {
-
-    "dateTime": "2025-12-13T23:00:00+00:00"   "summary": "Christmas Day Lunch for Veterans",   "iCalUID": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500@google.com",
-
-   }
-
-  },   "description": "Full Christmas dinner for veterans. Transport available. MUST BOOK by Dec 20th.",   "sequence": 0,
-
-  {
-
-   "kind": "calendar#event",   "location": "Durham County Hall, County Hall, Durham DH1 5UL, UK",   "reminders": {
-
-   "id": "xmas_market_20251214",
-
-   "summary": "Newcastle Christmas Market Visit",   "start": {    "useDefault": true
-
-   "description": "Group trip to Newcastle Christmas Market. Meet at Central Station, explore together.",
-
-   "location": "Newcastle Central Station, Neville Street, Newcastle upon Tyne NE1 5DH, UK",    "dateTime": "2025-12-25T12:00:00+00:00"   },
-
-   "start": {
-
-    "dateTime": "2025-12-14T11:00:00+00:00"   },   "eventType": "default"
-
+   "organizer": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
    },
-
-   "end": {   "end": {  },
-
-    "dateTime": "2025-12-14T15:00:00+00:00"
-
-   }    "dateTime": "2025-12-25T16:00:00+00:00"  {
-
-  },
-
-  {   }   "kind": "calendar#event",
-
-   "kind": "calendar#event",
-
-   "id": "women_xmas_20251216",  },   "etag": "\"3433817233780000\"",
-
-   "summary": "Women Veterans Christmas Coffee",
-
-   "description": "Christmas coffee morning with Secret Santa (£5 limit optional), festive treats and conversation.",  {   "id": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500_20251028T191500Z",
-
-   "location": "Veterans Gateway Centre, Pilgrim Street, Newcastle upon Tyne NE1 6QG, UK",
-
-   "start": {   "kind": "calendar#event",   "status": "confirmed",
-
-    "dateTime": "2025-12-16T10:00:00+00:00"
-
-   },   "id": "boxing_day_walk_20251226",   "htmlLink": "https://www.google.com/calendar/event?eid=M2NmM3V2aGdqY2tjcWh0YWc5MnRwa3U2OWdyMjAyNDA0MzBUMTgxNTAwXzIwMjUxMDI4VDE5MTUwMFogdmV0ZXJhbnNkaWFyeW5vcnRoZWFzdEBt&ctz=Europe/London",
-
-   "end": {
-
-    "dateTime": "2025-12-16T12:00:00+00:00"   "summary": "Boxing Day Countryside Walk",   "created": "2024-05-28T14:58:41.000Z",
-
-   }
-
-  },   "description": "6-mile walk around Kielder Water. Finish at pub.",   "updated": "2024-05-28T15:03:36.890Z",
-
-  {
-
-   "kind": "calendar#event",   "location": "Kielder Castle, Kielder, Hexham NE48 1ER, UK",   "summary": "DLI association meeting",
-
-   "id": "breakfast_xmas_20251218",
-
-   "summary": "Veterans Breakfast Club - Christmas Week",   "start": {   "description": "The meeting starts at 20:00hrs in the lounge bar. Members normally attend for 19:00hrs onwards",
-
-   "description": "Last breakfast before Christmas. Extra special festive breakfast. Christmas jumpers encouraged!",
-
-   "location": "Jesmond Cricket Club, Osborne Avenue, Newcastle upon Tyne NE2 1JS, UK",    "dateTime": "2025-12-26T10:30:00+00:00"   "location": "The Royal British Legion, 9 Queen St, South Shields NE33 1HL, UK",
-
    "start": {
-
-    "dateTime": "2025-12-18T09:00:00+00:00"   },   "creator": {
-
+    "dateTime": "2025-10-04T10:30:00+01:00",
+    "timeZone": "Europe/London"
    },
-
-   "end": {   "end": {    "email": "veteransdiarynortheast@gmail.com",
-
-    "dateTime": "2025-12-18T11:00:00+00:00"
-
-   }    "dateTime": "2025-12-26T14:00:00+00:00"    "self": true
-
+   "end": {
+    "dateTime": "2025-10-04T11:30:00+01:00",
+    "timeZone": "Europe/London"
+   },
+   "recurringEventId": "31sp0c32b8frjo8u556cii171b",
+   "originalStartTime": {
+    "dateTime": "2025-10-04T10:30:00+01:00",
+    "timeZone": "Europe/London"
+   },
+   "iCalUID": "31sp0c32b8frjo8u556cii171b@google.com",
+   "sequence": 1,
+   "reminders": {
+    "useDefault": true
+   },
+   "eventType": "default"
   },
-
-  {   }   },
-
+  {
    "kind": "calendar#event",
-
-   "id": "xmas_day_lunch_20251225",  }   "organizer": {
-
-   "summary": "Christmas Day Lunch for Veterans",
-
-   "description": "Full Christmas dinner for veterans. Transport available. MUST BOOK by Dec 20th.", ]    "email": "veteransdiarynortheast@gmail.com",
-
-   "location": "Durham County Hall, County Hall, Durham DH1 5UL, UK",
-
-   "start": {}    "self": true
-
-    "dateTime": "2025-12-25T12:00:00+00:00"
-
-   },   },
-
-   "end": {   "start": {
-
-    "dateTime": "2025-12-25T16:00:00+00:00"    "dateTime": "2025-10-28T19:15:00Z",
-
-   }    "timeZone": "Europe/London"
-
-  },   },
-
-  {   "end": {
-
-   "kind": "calendar#event",    "dateTime": "2025-10-28T23:00:00Z",
-
-   "id": "boxing_day_walk_20251226",    "timeZone": "Europe/London"
-
-   "summary": "Boxing Day Countryside Walk",   },
-
-   "description": "6-mile walk around Kielder Water. Finish at Anglers Arms pub. Dogs welcome.",   "recurringEventId": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500",
-
-   "location": "Kielder Castle, Kielder, Hexham NE48 1ER, UK",   "originalStartTime": {
-
-   "start": {    "dateTime": "2025-10-28T19:15:00Z",
-
-    "dateTime": "2025-12-26T10:30:00+00:00"    "timeZone": "Europe/London"
-
-   },   },
-
-   "end": {   "iCalUID": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500@google.com",
-
-    "dateTime": "2025-12-26T14:00:00+00:00"   "sequence": 0,
-
-   }   "reminders": {
-
-  },    "useDefault": true
-
-  {   },
-
-   "kind": "calendar#event",   "eventType": "default"
-
-   "id": "new_year_planning_20251230",  },
-
-   "summary": "2026 Events Planning Meeting",  {
-
-   "description": "Planning for 2026 events. Share your ideas for next year. All veterans invited.",   "kind": "calendar#event",
-
-   "location": "Veterans Gateway Centre, Pilgrim Street, Newcastle upon Tyne NE1 6QG, UK",   "etag": "\"3434173865756000\"",
-
-   "start": {   "id": "2ege54ai1ol6pjcbdku7ig95en_20251018T080000Z",
-
-    "dateTime": "2025-12-30T14:00:00+00:00"   "status": "confirmed",
-
-   },   "htmlLink": "https://www.google.com/calendar/event?eid=MmVnZTU0YWkxb2w2cGpjYmRrdTdpZzk1ZW5fMjAyNTEwMThUMDgwMDAwWiB2ZXRlcmFuc2RpYXJ5bm9ydGhlYXN0QG0&ctz=Europe/London",
-
-   "end": {   "created": "2024-05-30T16:35:32.000Z",
-
-    "dateTime": "2025-12-30T16:00:00+00:00"   "updated": "2024-05-30T16:35:32.878Z",
-
-   }   "summary": "Sunderland  Armed Forces & Veterans Breakfast Club",
-
-  }   "description": "07954 408528",
-
- ]   "location": "Lakeside & Gilley Law Community Association North Moor Lane, Sunderland, SR3 3BD",
-
-}   "creator": {
-
+   "etag": "\"3433817233780000\"",
+   "id": "31sp0c32b8frjo8u556cii171b_20251101T103000Z",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=MzFzcDBjMzJiOGZyam84dTU1NmNpaTE3MWJfMjAyNTExMDFUMTAzMDAwWiB2ZXRlcmFuc2RpYXJ5bm9ydGhlYXN0QG0&ctz=Europe/London",
+   "created": "2024-05-28T14:58:41.000Z",
+   "updated": "2024-05-28T15:03:36.890Z",
+   "summary": "East Durham Veterans Breakfast Club",
+   "description": "\u003cp\u003eBreakfast Club is a free veterans and families breakfast served up at our hub which aims to not only aid our veterans financially during the cost of living crisis but also to allow them the opportunity to socialise and meet new people in a comfortable and friendly environment.Â  We provide this opportunity on the first Saturday of every month at 10:30 am. This is a great way for our veterans and their friends to meet, socialise and enjoy a free breakfast cooked up by our very own chef .\u003c/p\u003e\u003cp\u003eâ\u0080\u008b\u003c/p\u003e",
+   "location": "Dawdon Youth and Community Centre, Queen Alexandra Rd, Seaham SR7 7NH, UK",
+   "creator": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
+   },
+   "start": {
+    "dateTime": "2025-11-01T10:30:00Z",
+    "timeZone": "Europe/London"
+   },
+   "end": {
+    "dateTime": "2025-11-01T11:30:00Z",
+    "timeZone": "Europe/London"
+   },
+   "recurringEventId": "31sp0c32b8frjo8u556cii171b",
+   "originalStartTime": {
+    "dateTime": "2025-11-01T10:30:00Z",
+    "timeZone": "Europe/London"
+   },
+   "iCalUID": "31sp0c32b8frjo8u556cii171b@google.com",
+   "sequence": 1,
+   "reminders": {
+    "useDefault": true
+   },
+   "eventType": "default"
+  },
+  {
+   "kind": "calendar#event",
+   "etag": "\"3433817233780000\"",
+   "id": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500_20250930T181500Z",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=M2NmM3V2aGdqY2tjcWh0YWc5MnRwa3U2OWdyMjAyNDA0MzBUMTgxNTAwXzIwMjUwOTMwVDE4MTUwMFogdmV0ZXJhbnNkaWFyeW5vcnRoZWFzdEBt&ctz=Europe/London",
+   "created": "2024-05-28T14:58:41.000Z",
+   "updated": "2024-05-28T15:03:36.890Z",
+   "summary": "DLI association meeting",
+   "description": "The meeting starts at 20:00hrs in the lounge bar. Members normally attend for 19:00hrs onwards",
+   "location": "The Royal British Legion, 9 Queen St, South Shields NE33 1HL, UK",
+   "creator": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
+   },
+   "start": {
+    "dateTime": "2025-09-30T19:15:00+01:00",
+    "timeZone": "Europe/London"
+   },
+   "end": {
+    "dateTime": "2025-09-30T23:00:00+01:00",
+    "timeZone": "Europe/London"
+   },
+   "recurringEventId": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500",
+   "originalStartTime": {
+    "dateTime": "2025-09-30T19:15:00+01:00",
+    "timeZone": "Europe/London"
+   },
+   "iCalUID": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500@google.com",
+   "sequence": 0,
+   "reminders": {
+    "useDefault": true
+   },
+   "eventType": "default"
+  },
+  {
+   "kind": "calendar#event",
+   "etag": "\"3433817233780000\"",
+   "id": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500_20251028T191500Z",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=M2NmM3V2aGdqY2tjcWh0YWc5MnRwa3U2OWdyMjAyNDA0MzBUMTgxNTAwXzIwMjUxMDI4VDE5MTUwMFogdmV0ZXJhbnNkaWFyeW5vcnRoZWFzdEBt&ctz=Europe/London",
+   "created": "2024-05-28T14:58:41.000Z",
+   "updated": "2024-05-28T15:03:36.890Z",
+   "summary": "DLI association meeting",
+   "description": "The meeting starts at 20:00hrs in the lounge bar. Members normally attend for 19:00hrs onwards",
+   "location": "The Royal British Legion, 9 Queen St, South Shields NE33 1HL, UK",
+   "creator": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
+   },
+   "organizer": {
+    "email": "veteransdiarynortheast@gmail.com",
+    "self": true
+   },
+   "start": {
+    "dateTime": "2025-10-28T19:15:00Z",
+    "timeZone": "Europe/London"
+   },
+   "end": {
+    "dateTime": "2025-10-28T23:00:00Z",
+    "timeZone": "Europe/London"
+   },
+   "recurringEventId": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500",
+   "originalStartTime": {
+    "dateTime": "2025-10-28T19:15:00Z",
+    "timeZone": "Europe/London"
+   },
+   "iCalUID": "3cf3uvhgjckcqhtag92tpku69gr20240430T181500@google.com",
+   "sequence": 0,
+   "reminders": {
+    "useDefault": true
+   },
+   "eventType": "default"
+  },
+  {
+   "kind": "calendar#event",
+   "etag": "\"3434173865756000\"",
+   "id": "2ege54ai1ol6pjcbdku7ig95en_20251018T080000Z",
+   "status": "confirmed",
+   "htmlLink": "https://www.google.com/calendar/event?eid=MmVnZTU0YWkxb2w2cGpjYmRrdTdpZzk1ZW5fMjAyNTEwMThUMDgwMDAwWiB2ZXRlcmFuc2RpYXJ5bm9ydGhlYXN0QG0&ctz=Europe/London",
+   "created": "2024-05-30T16:35:32.000Z",
+   "updated": "2024-05-30T16:35:32.878Z",
+   "summary": "Sunderland  Armed Forces & Veterans Breakfast Club",
+   "description": "07954 408528",
+   "location": "Lakeside & Gilley Law Community Association North Moor Lane, Sunderland, SR3 3BD",
+   "creator": {
     "email": "veteransdiarynortheast@gmail.com",
     "self": true
    },
