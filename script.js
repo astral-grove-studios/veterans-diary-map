@@ -328,7 +328,7 @@ class EventMap {
       calendarEvent.summary,
       calendarEvent.description
     );
-    
+
     const event = {
       id: index,
       title: calendarEvent.summary || "Unnamed Event",
@@ -1268,6 +1268,37 @@ class EventMap {
     this.addMarkers();
   }
 
+  isRemembrancePeriod() {
+    // Check if we're in November (Remembrance month)
+    const now = new Date();
+    return now.getMonth() === 10; // November is month 10 (0-indexed)
+  }
+
+  getPoppyIcon() {
+    // Create a custom poppy icon for Remembrance period
+    // Rotated to point at 11 o'clock (30 degrees counter-clockwise from 12 o'clock)
+    return L.divIcon({
+      className: 'poppy-marker',
+      html: `<div style="position: relative; width: 40px; height: 40px;">
+        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <g transform="rotate(30 20 20)">
+            <!-- Poppy petals -->
+            <ellipse cx="12" cy="15" rx="8" ry="10" fill="#E31E24" transform="rotate(-30 20 20)"/>
+            <ellipse cx="28" cy="15" rx="8" ry="10" fill="#E31E24" transform="rotate(30 20 20)"/>
+            <ellipse cx="12" cy="25" rx="8" ry="10" fill="#E31E24" transform="rotate(-150 20 20)"/>
+            <ellipse cx="28" cy="25" rx="8" ry="10" fill="#E31E24" transform="rotate(150 20 20)"/>
+            <!-- Center -->
+            <circle cx="20" cy="20" r="5" fill="#1a1a1a"/>
+            <circle cx="20" cy="20" r="3" fill="#0d5c1f"/>
+          </g>
+        </svg>
+      </div>`,
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -40]
+    });
+  }
+
   addMarkers() {
     // Clear existing markers
     this.markers.forEach((marker) => this.map.removeLayer(marker));
@@ -1305,7 +1336,13 @@ class EventMap {
       if (eventsAtLocationDate.length === 1) {
         // Single event at this location on this date
         const event = eventsAtLocationDate[0];
-        const marker = L.marker([lat, lng])
+
+        // Use poppy icon during Remembrance period (November)
+        const markerOptions = this.isRemembrancePeriod()
+          ? { icon: this.getPoppyIcon() }
+          : {};
+
+        const marker = L.marker([lat, lng], markerOptions)
           .addTo(this.map)
           .bindPopup(this.createPopupContent(event));
 
@@ -1327,7 +1364,12 @@ class EventMap {
           return timeA.localeCompare(timeB);
         });
 
-        const marker = L.marker([lat, lng])
+        // Use poppy icon during Remembrance period (November)
+        const markerOptions = this.isRemembrancePeriod()
+          ? { icon: this.getPoppyIcon() }
+          : {};
+
+        const marker = L.marker([lat, lng], markerOptions)
           .addTo(this.map)
           .bindPopup(this.createMultiEventPopupContent(sortedEvents, date));
 
@@ -1619,7 +1661,7 @@ class EventMap {
             const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
               ? event.categories
               : (event.category ? [event.category] : ['other']);
-            
+
             const tagBadges = categories
               .map(
                 (category) =>
@@ -1752,7 +1794,7 @@ class EventMap {
             const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
               ? event.categories
               : (event.category ? [event.category] : ['other']);
-            
+
             const tagBadges = categories
               .map(
                 (category) =>
