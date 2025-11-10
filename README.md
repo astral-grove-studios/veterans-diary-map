@@ -2,6 +2,10 @@
 
 A simple, vanilla JavaScript event mapping system designed to display veteran events from Google Calendar on an interactive map. Built for Veterans for Veterans in Care (VFVIC) to show events across the Northeast of England.
 
+## 🌐 Live Demo
+
+**View the live demo:** [https://astral-grove-studios.github.io/veterans-diary-map/](https://astral-grove-studios.github.io/veterans-diary-map/)
+
 ## Key Features
 
 - **Google Calendar Integration**: Connects to VFVIC Google Calendar for live event data
@@ -16,6 +20,10 @@ A simple, vanilla JavaScript event mapping system designed to display veteran ev
 - **Enhanced Security**: Input validation and XSS protection
 
 ## Quick Start
+
+**View Live:**
+
+Visit the deployed version at: [https://astral-grove-studios.github.io/veterans-diary-map/](https://astral-grove-studios.github.io/veterans-diary-map/)
 
 **Local Development:**
 
