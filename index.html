@@ -79,6 +79,19 @@
                     Clear Filters
                 </button>
             </div>
+
+            <!-- Mobile event count and info -->
+            <div class="lg:hidden mt-4">
+                <div class="flex items-center justify-between">
+                    <span id="mobileEventCount" class="text-sm text-gray-600">Click markers to view event details</span>
+                    <div class="flex gap-2">
+                        <span id="mobileCounter" class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">0</span>
+                        <button id="showMobileList" class="px-3 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600 transition-colors">
+                            View List
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Desktop: Side-by-side layout, Mobile: Map-only with popups -->
@@ -101,19 +114,6 @@
             </div>
             <!-- Map - full width on mobile, shared space on desktop -->
             <div id="map" class="rounded-lg shadow-md order-1 lg:order-2 col-span-1 lg:col-span-1"></div>
-        </div>
-
-        <!-- Mobile event count and info -->
-        <div class="lg:hidden mt-4 bg-white rounded-lg shadow-md p-4">
-            <div class="flex items-center justify-between">
-                <span id="mobileEventCount" class="text-sm text-gray-600">Click markers to view event details</span>
-                <div class="flex gap-2">
-                    <span id="mobileCounter" class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">0</span>
-                    <button id="showMobileList" class="px-3 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600 transition-colors">
-                        View List
-                    </button>
-                </div>
-            </div>
         </div>
 
         <!-- Mobile event list modal -->

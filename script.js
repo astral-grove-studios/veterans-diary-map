@@ -328,7 +328,7 @@ class EventMap {
       calendarEvent.summary,
       calendarEvent.description
     );
-    
+
     const event = {
       id: index,
       title: calendarEvent.summary || "Unnamed Event",
@@ -1194,21 +1194,26 @@ class EventMap {
   }
 
   showSampleDataNotification() {
-    // Create a notification banner for real calendar data
+    // Only show notification in dev environment (localhost)
+    const isProduction = window.location.hostname.includes('github.io');
+    if (isProduction) {
+      return; // Don't show banner in production
+    }
+
+    // Create a notification banner for sample data
     const notification = document.createElement("div");
     notification.className =
-      "bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-5 rounded";
+      "bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-5 rounded";
     notification.innerHTML = `
             <div class="flex">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                     </svg>
                 </div>
                 <div class="ml-3">
                     <p class="text-sm">
-                        <strong>Live Calendar Data:</strong> Showing real VFVIC events including clay pigeon shooting, breakfast clubs, and support groups.
-                        Events are automatically filtered to show only upcoming activities.
+                        <strong>Sample Data:</strong> Showing demonstration events. Configure Google Calendar API to display real events.
                     </p>
                 </div>
             </div>
@@ -1220,6 +1225,12 @@ class EventMap {
   }
 
   showRealDataNotification() {
+    // Only show notification in dev environment (localhost)
+    const isProduction = window.location.hostname.includes('github.io');
+    if (isProduction) {
+      return; // Don't show banner in production
+    }
+
     // Create a notification banner for real calendar data
     const notification = document.createElement("div");
     notification.className =
@@ -1255,6 +1266,37 @@ class EventMap {
     }).addTo(this.map);
 
     this.addMarkers();
+  }
+
+  isRemembrancePeriod() {
+    // Check if we're in November (Remembrance month)
+    const now = new Date();
+    return now.getMonth() === 10; // November is month 10 (0-indexed)
+  }
+
+  getPoppyIcon() {
+    // Create a custom poppy icon for Remembrance period
+    // Rotated to point at 11 o'clock (30 degrees counter-clockwise from 12 o'clock)
+    return L.divIcon({
+      className: 'poppy-marker',
+      html: `<div style="position: relative; width: 40px; height: 40px;">
+        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <g transform="rotate(30 20 20)">
+            <!-- Poppy petals -->
+            <ellipse cx="12" cy="15" rx="8" ry="10" fill="#E31E24" transform="rotate(-30 20 20)"/>
+            <ellipse cx="28" cy="15" rx="8" ry="10" fill="#E31E24" transform="rotate(30 20 20)"/>
+            <ellipse cx="12" cy="25" rx="8" ry="10" fill="#E31E24" transform="rotate(-150 20 20)"/>
+            <ellipse cx="28" cy="25" rx="8" ry="10" fill="#E31E24" transform="rotate(150 20 20)"/>
+            <!-- Center -->
+            <circle cx="20" cy="20" r="5" fill="#1a1a1a"/>
+            <circle cx="20" cy="20" r="3" fill="#0d5c1f"/>
+          </g>
+        </svg>
+      </div>`,
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -40]
+    });
   }
 
   addMarkers() {
@@ -1294,7 +1336,13 @@ class EventMap {
       if (eventsAtLocationDate.length === 1) {
         // Single event at this location on this date
         const event = eventsAtLocationDate[0];
-        const marker = L.marker([lat, lng])
+
+        // Use poppy icon during Remembrance period (November)
+        const markerOptions = this.isRemembrancePeriod()
+          ? { icon: this.getPoppyIcon() }
+          : {};
+
+        const marker = L.marker([lat, lng], markerOptions)
           .addTo(this.map)
           .bindPopup(this.createPopupContent(event));
 
@@ -1316,7 +1364,12 @@ class EventMap {
           return timeA.localeCompare(timeB);
         });
 
-        const marker = L.marker([lat, lng])
+        // Use poppy icon during Remembrance period (November)
+        const markerOptions = this.isRemembrancePeriod()
+          ? { icon: this.getPoppyIcon() }
+          : {};
+
+        const marker = L.marker([lat, lng], markerOptions)
           .addTo(this.map)
           .bindPopup(this.createMultiEventPopupContent(sortedEvents, date));
 
@@ -1608,7 +1661,7 @@ class EventMap {
             const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
               ? event.categories
               : (event.category ? [event.category] : ['other']);
-            
+
             const tagBadges = categories
               .map(
                 (category) =>
@@ -1639,9 +1692,9 @@ class EventMap {
 
             return `
                     <div class="${elapsedClass} rounded-lg p-3 mb-3 border-l-4 ${borderClass}"
-                         onclick="eventMap.focusOnEvent('${event.id}')">
+                         onclick="eventMap.focusOnEvent('${event.id}')" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">
                         <div class="flex justify-between items-start mb-2">
-                            <h5 class="text-sm font-semibold text-gray-800 leading-tight flex-1">${
+                            <h5 class="text-sm font-semibold text-gray-800 leading-tight flex-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${
                               event.title
                             }</h5>
                             <div class="flex items-center ml-2">
@@ -1652,13 +1705,13 @@ class EventMap {
                             </div>
                         </div>
                         ${distanceInfo}
-                        <p class="text-xs text-gray-600 mb-1"><strong>📍</strong> ${
+                        <p class="text-xs text-gray-600 mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>📍</strong> ${
                           event.location
                         }</p>
                         <div class="mb-2">${tagBadges}</div>
                         ${
                           event.description
-                            ? `<p class="text-xs text-gray-700 line-clamp-2">${event.description}</p>`
+                            ? `<p class="text-xs text-gray-700 line-clamp-2" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.description}</p>`
                             : ""
                         }
                     </div>
@@ -1741,7 +1794,7 @@ class EventMap {
             const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
               ? event.categories
               : (event.category ? [event.category] : ['other']);
-            
+
             const tagBadges = categories
               .map(
                 (category) =>
@@ -1775,16 +1828,16 @@ class EventMap {
 
             return `
                     <div class="${elapsedClass} rounded-lg p-4 cursor-pointer transition-all duration-300 border-l-4 ${borderClass} ${hoverClass} hover:shadow-md hover:-translate-y-1 mb-4"
-                         data-event-id="${event.id}" onclick="eventMap.focusEvent(${event.id})">
+                         data-event-id="${event.id}" onclick="eventMap.focusEvent(${event.id})" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">
                         <div class="flex items-start justify-between mb-2">
-                            <h4 class="text-gray-800 text-lg font-semibold flex-1">${event.title}</h4>
+                            <h4 class="text-gray-800 text-lg font-semibold flex-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.title}</h4>
                             ${elapsedLabel}
                         </div>
-                        <p class="text-gray-600 text-sm mb-1"><strong>⏰</strong> ${event.time}</p>
-                        <p class="text-gray-600 text-sm mb-1"><strong>📍</strong> ${event.location}</p>
+                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>⏰</strong> ${event.time}</p>
+                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>📍</strong> ${event.location}</p>
                         ${distanceInfo}
-                        <p class="text-gray-600 text-sm mb-1">${event.description}</p>
-                        <p class="text-gray-600 text-sm mb-2"><strong>👤</strong> ${event.organizer}</p>
+                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.description}</p>
+                        <p class="text-gray-600 text-sm mb-2" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>👤</strong> ${event.organizer}</p>
                         <div class="flex flex-wrap">${tagBadges}</div>
                     </div>
                 `;
