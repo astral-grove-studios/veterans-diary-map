@@ -14,8 +14,8 @@ This guide shows you how to add your Google Calendar API credentials as GitHub S
 ### Step 1: Get Your Credentials
 
 You should already have:
-- **API Key**: `AIzaSyCzl-q5VwLNtmiEt2bKfSiHqc0mpMHrz3Q`
-- **Calendar ID**: `veteransdiarynortheast@gmail.com`
+- **API Key**: `Your actual API key from Google Cloud Console`
+- **Calendar ID**: `Your actual calendar ID`
 
 ### Step 2: Add Secrets to GitHub
 
@@ -81,10 +81,10 @@ schedule:
 
 ## 🎯 Benefits
 
-✅ **API key stays secret** - Never exposed in code or logs  
-✅ **Fresh events** - Auto-updates on every deployment  
-✅ **Daily refresh** - Optional scheduled updates  
-✅ **No manual work** - Set and forget  
+✅ **API key stays secret** - Never exposed in code or logs
+✅ **Fresh events** - Auto-updates on every deployment
+✅ **Daily refresh** - Optional scheduled updates
+✅ **No manual work** - Set and forget
 ✅ **Safe to share** - Repository can be public
 
 ## 🧪 Testing
@@ -133,10 +133,10 @@ The workflow is set to `continue-on-error: true` for the fetch step, meaning:
 
 ## 🔒 Security Best Practices
 
-✅ **Never commit config.js** - Already in .gitignore  
-✅ **Use restricted API keys** - Limit to Calendar API only  
-✅ **Rotate keys periodically** - Update secrets annually  
-✅ **Monitor usage** - Check Google Cloud Console for unexpected activity  
+✅ **Never commit config.js** - Already in .gitignore
+✅ **Use restricted API keys** - Limit to Calendar API only
+✅ **Rotate keys periodically** - Update secrets annually
+✅ **Monitor usage** - Check Google Cloud Console for unexpected activity
 
 ## 📞 Need Help?
 

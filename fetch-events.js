@@ -7,11 +7,12 @@ const fs = require('fs');
 
 // Get config from environment variables or command line args
 const API_KEY = process.env.GOOGLE_CALENDAR_API_KEY || process.argv[2];
-const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID || process.argv[3] || 'veteransdiarynortheast@gmail.com';
+const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID || process.argv[3];
 const MAX_EVENTS = 50;
 
-if (!API_KEY) {
-  console.error('Error: GOOGLE_CALENDAR_API_KEY environment variable is required');
+if (!API_KEY || !CALENDAR_ID) {
+    console.error('Error: GOOGLE_CALENDAR_API_KEY environment variable is required');
+    console.error('Error: GOOGLE_CALENDAR_ID environment variable is required');
   console.error('Usage: node fetch-events.js [API_KEY] [CALENDAR_ID]');
   process.exit(1);
 }
@@ -39,7 +40,7 @@ https.get(url, (res) => {
 
     try {
       const jsonData = JSON.parse(data);
-      
+
       if (!jsonData.items || jsonData.items.length === 0) {
         console.warn('Warning: No events found in calendar');
         // Still write empty items array
@@ -54,17 +55,17 @@ https.get(url, (res) => {
       // Format the output to match the existing file format
       // (starts with "items": instead of being a complete JSON object)
       const output = ' "items": ' + JSON.stringify(jsonData.items, null, 1) + '\n';
-      
+
       // Write to google-calendar-events file
       fs.writeFileSync('google-calendar-events', output);
-      
+
       console.log(`Successfully saved ${jsonData.items.length} events to google-calendar-events`);
-      console.log('Event date range:', 
+      console.log('Event date range:',
         jsonData.items[0]?.start?.dateTime || jsonData.items[0]?.start?.date,
         'to',
         jsonData.items[jsonData.items.length - 1]?.start?.dateTime || jsonData.items[jsonData.items.length - 1]?.start?.date
       );
-      
+
     } catch (error) {
       console.error('Error parsing API response:', error.message);
       process.exit(1);
