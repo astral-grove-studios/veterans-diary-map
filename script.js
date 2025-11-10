@@ -323,15 +323,21 @@ class EventMap {
 
   async transformGoogleCalendarEvent(calendarEvent, index) {
     // Transform Google Calendar event to our format
+    const categorization = this.categorizeEvent(
+      calendarEvent.summary,
+      calendarEvent.description
+    );
+    
     const event = {
       id: index,
       title: calendarEvent.summary || "Unnamed Event",
       description: calendarEvent.description || "No description available",
-      category: this.categorizeEvent(
-        calendarEvent.summary,
-        calendarEvent.description
-      ),
+      category: categorization.primary || categorization,
+      categories: categorization.tags || [categorization],
       date: this.extractDate(calendarEvent),
+      time: this.extractTime(calendarEvent),
+      startTime: this.extractStartTime(calendarEvent),
+      endTime: this.extractEndTime(calendarEvent),
       location: calendarEvent.location || "Location TBD",
       organizer: calendarEvent.organizer?.displayName || "VFVIC",
       originalEvent: calendarEvent, // Keep reference for debugging
@@ -1598,7 +1604,11 @@ class EventMap {
         const eventsHtml = sortedEvents
           .map((event) => {
             // Generate tag badges for all categories - smaller for mobile
-            const tagBadges = (event.categories || [event.category])
+            const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
+              ? event.categories
+              : (event.category ? [event.category] : ['other']);
+            
+            const tagBadges = categories
               .map(
                 (category) =>
                   `<span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-white mr-1 mb-1 ${this.getCategoryColorClass(
@@ -1727,7 +1737,11 @@ class EventMap {
         const eventsHtml = sortedEvents
           .map((event) => {
             // Generate tag badges for all categories
-            const tagBadges = (event.categories || [event.category])
+            const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
+              ? event.categories
+              : (event.category ? [event.category] : ['other']);
+            
+            const tagBadges = categories
               .map(
                 (category) =>
                   `<span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-white mr-1 mb-1 ${this.getCategoryColorClass(
