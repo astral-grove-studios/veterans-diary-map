@@ -1650,9 +1650,9 @@ class EventMap {
 
             return `
                     <div class="${elapsedClass} rounded-lg p-3 mb-3 border-l-4 ${borderClass}"
-                         onclick="eventMap.focusOnEvent('${event.id}')">
+                         onclick="eventMap.focusOnEvent('${event.id}')" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">
                         <div class="flex justify-between items-start mb-2">
-                            <h5 class="text-sm font-semibold text-gray-800 leading-tight flex-1">${
+                            <h5 class="text-sm font-semibold text-gray-800 leading-tight flex-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${
                               event.title
                             }</h5>
                             <div class="flex items-center ml-2">
@@ -1663,13 +1663,13 @@ class EventMap {
                             </div>
                         </div>
                         ${distanceInfo}
-                        <p class="text-xs text-gray-600 mb-1"><strong>📍</strong> ${
+                        <p class="text-xs text-gray-600 mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>📍</strong> ${
                           event.location
                         }</p>
                         <div class="mb-2">${tagBadges}</div>
                         ${
                           event.description
-                            ? `<p class="text-xs text-gray-700 line-clamp-2">${event.description}</p>`
+                            ? `<p class="text-xs text-gray-700 line-clamp-2" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.description}</p>`
                             : ""
                         }
                     </div>
@@ -1786,16 +1786,16 @@ class EventMap {
 
             return `
                     <div class="${elapsedClass} rounded-lg p-4 cursor-pointer transition-all duration-300 border-l-4 ${borderClass} ${hoverClass} hover:shadow-md hover:-translate-y-1 mb-4"
-                         data-event-id="${event.id}" onclick="eventMap.focusEvent(${event.id})">
+                         data-event-id="${event.id}" onclick="eventMap.focusEvent(${event.id})" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">
                         <div class="flex items-start justify-between mb-2">
-                            <h4 class="text-gray-800 text-lg font-semibold flex-1">${event.title}</h4>
+                            <h4 class="text-gray-800 text-lg font-semibold flex-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.title}</h4>
                             ${elapsedLabel}
                         </div>
-                        <p class="text-gray-600 text-sm mb-1"><strong>⏰</strong> ${event.time}</p>
-                        <p class="text-gray-600 text-sm mb-1"><strong>📍</strong> ${event.location}</p>
+                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>⏰</strong> ${event.time}</p>
+                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>📍</strong> ${event.location}</p>
                         ${distanceInfo}
-                        <p class="text-gray-600 text-sm mb-1">${event.description}</p>
-                        <p class="text-gray-600 text-sm mb-2"><strong>👤</strong> ${event.organizer}</p>
+                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.description}</p>
+                        <p class="text-gray-600 text-sm mb-2" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>👤</strong> ${event.organizer}</p>
                         <div class="flex flex-wrap">${tagBadges}</div>
                     </div>
                 `;
