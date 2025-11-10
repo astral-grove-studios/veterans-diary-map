@@ -1,0 +1,31 @@
+{
+  "name": "veterans-diary-map",
+  "version": "1.0.0",
+  "description": "Interactive event mapping system for Veterans for Veterans in Care (VFVIC) showing veteran events across Northeast England",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "dev": "python -m http.server 8080",
+    "lint": "echo 'Linting not configured yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astral-grove-studios/veterans-diary-map.git"
+  },
+  "keywords": [
+    "veterans",
+    "events",
+    "map",
+    "northeast-england",
+    "leaflet",
+    "google-calendar"
+  ],
+  "author": "Astral Grove Studios",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/astral-grove-studios/veterans-diary-map/issues"
+  },
+  "homepage": "https://github.com/astral-grove-studios/veterans-diary-map#readme",
+  "devDependencies": {},
+  "dependencies": {}
+}
