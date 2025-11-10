@@ -92,8 +92,9 @@ class EventMap {
       this.events = await this.processCalendarItems(data.items);
       console.log(`Processed ${this.events.length} events for display`);
 
-      // If no events after filtering, treat as error and use sample data
+      // If no events after filtering, throw error to trigger fallback to sample data
       if (this.events.length === 0) {
+        console.warn("No upcoming events found in calendar file (all events may be in the past)");
         throw new Error(
           "No upcoming events found in calendar file (all events may be in the past)"
         );
