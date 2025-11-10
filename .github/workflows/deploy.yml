@@ -6,6 +6,9 @@ on:
       - main
       - codebase_optimisation
   workflow_dispatch:
+  schedule:
+    # Fetch fresh events daily at 6 AM UTC
+    - cron: '0 6 * * *'
 
 permissions:
   contents: read
@@ -25,6 +28,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Fetch latest calendar events
+        env:
+          GOOGLE_CALENDAR_API_KEY: ${{ secrets.GOOGLE_CALENDAR_API_KEY }}
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+        run: |
+          node fetch-events.js
+        continue-on-error: true
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
