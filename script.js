@@ -204,8 +204,8 @@ class EventMap {
       originalEvent: item, // Keep reference for debugging
     };
 
-    // Get coordinates for the location
-    const coordinates = await this.getCoordinatesForLocation(location);
+    // Get coordinates for the location (pass event title as venue name for better geocoding)
+    const coordinates = await this.getCoordinatesForLocation(location, event.title);
     event.lat = coordinates.lat;
     event.lng = coordinates.lng;
 
@@ -403,24 +403,24 @@ class EventMap {
     });
   }
 
-  async getCoordinatesForLocation(location) {
+  async getCoordinatesForLocation(location, venueName = null) {
     // First try predefined locations for common Northeast England venues
     const coordinates = this.getKnownLocationCoordinates(location);
     if (coordinates) {
       return coordinates;
     }
 
-    // If geocoding is enabled and we have an API key, try that
+    // If geocoding is enabled and we have Mapbox API key, try that
     const config = window.CALENDAR_CONFIG;
     if (
       config?.ENABLE_GEOCODING &&
-      config?.GEOCODING_API_KEY &&
-      config.GEOCODING_API_KEY !== "your-geocoding-api-key-here"
+      config?.MAPBOX_API_KEY &&
+      config.MAPBOX_API_KEY !== "your-mapbox-api-key-here"
     ) {
       try {
-        return await this.geocodeLocation(location);
+        return await this.geocodeLocation(location, venueName);
       } catch (error) {
-        console.warn(`Geocoding failed for "${location}":`, error);
+        console.warn(`Geocoding failed for "${venueName || location}":`, error);
       }
     }
 
@@ -576,28 +576,45 @@ class EventMap {
     return { lat: latOffset, lng: lngOffset };
   }
 
-  async geocodeLocation(address) {
+  async geocodeLocation(address, venueName = null) {
     const config = window.CALENDAR_CONFIG;
     try {
+      // Combine venue name and location for better accuracy
+      let searchQuery = address;
+      if (venueName) {
+        searchQuery = `${venueName}, ${address}`;
+      }
+      
+      const query = encodeURIComponent(searchQuery);
+      
+      // Use Mapbox Geocoding API
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address + ", Northeast England, UK"
-        )}&key=${config.GEOCODING_API_KEY}`
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?country=gb&limit=1&access_token=${config.MAPBOX_API_KEY}`
       );
 
       if (!response.ok) {
-        throw new Error(`Geocoding API error: ${response.status}`);
+        throw new Error(`Mapbox Geocoding API error: ${response.status}`);
       }
 
       const data = await response.json();
-      if (data.results && data.results.length > 0) {
-        const location = data.results[0].geometry.location;
-        return { lat: location.lat, lng: location.lng };
+      if (data.features && data.features.length > 0) {
+        const coords = data.features[0].geometry.coordinates;
+        const result = { lat: coords[1], lng: coords[0] };
+        
+        // Debug logging
+        if (window.DEBUG_GEOCODING) {
+          console.log(`✓ Mapbox geocoded "${searchQuery}" to:`, result, `(confidence: ${data.features[0].relevance})`);
+        }
+        
+        return result;
       } else {
         throw new Error("No geocoding results found");
       }
     } catch (error) {
       console.error("Geocoding failed:", error);
+      if (window.DEBUG_GEOCODING) {
+        console.log(`✗ Failed to geocode "${venueName || address}"`);
+      }
       throw error;
     }
   }
@@ -2607,8 +2624,43 @@ class EventMap {
 
 // Initialize the event map when page loads
 let eventMap;
+
+// Create MapDebug early to ensure it's available
+window.MapDebug = {
+  enableDebug: () => {
+    window.DEBUG_GEOCODING = true;
+    console.log("🐛 Geocoding debug mode enabled. Check console for geocoding results.");
+  },
+  disableDebug: () => {
+    window.DEBUG_GEOCODING = false;
+    console.log("🔇 Geocoding debug mode disabled.");
+  },
+  testGeocode: async (venueName, address) => {
+    if (!eventMap) {
+      console.error("EventMap not initialized yet");
+      return;
+    }
+    const result = await eventMap.geocodeLocation(address, venueName);
+    console.log(`Result for "${venueName}, ${address}":`, result);
+    return result;
+  },
+  listAllMarkers: () => {
+    if (!eventMap) {
+      console.error("EventMap not initialized yet");
+      return;
+    }
+    console.table(eventMap.events.map(e => ({
+      title: e.title,
+      location: e.location,
+      lat: e.lat,
+      lng: e.lng
+    })));
+  }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   eventMap = new EventMap();
+  console.log('✓ MapDebug available - use MapDebug.enableDebug() to see geocoding results');
 });
 
 // Expose methods for WordPress integration

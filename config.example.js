@@ -8,8 +8,9 @@ const CALENDAR_CONFIG = {
     // Get this from your VFVIC Google Calendar settings
     CALENDAR_ID: 'your-calendar-id@group.calendar.google.com',
 
-    // Optional: Google Geocoding API key for location coordinates
-    GEOCODING_API_KEY: 'your-geocoding-api-key-here',
+    // Mapbox API key for geocoding (https://mapbox.com)
+    // Provides more accurate venue-based location matching
+    MAPBOX_API_KEY: 'your-mapbox-api-key-here',
 
     // Default region for events (Northeast England)
     DEFAULT_REGION: {
