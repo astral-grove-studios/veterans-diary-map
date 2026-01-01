@@ -94,7 +94,9 @@ class EventMap {
 
       // If no events after filtering, throw error to trigger fallback to sample data
       if (this.events.length === 0) {
-        console.warn("No upcoming events found in calendar file (all events may be in the past)");
+        console.warn(
+          "No upcoming events found in calendar file (all events may be in the past)"
+        );
         throw new Error(
           "No upcoming events found in calendar file (all events may be in the past)"
         );
@@ -180,12 +182,12 @@ class EventMap {
   }
 
   async transformCalendarItem(item, id) {
-    // Clean and sanitize the data
-    const title = this.sanitizeText(item.summary || "Unnamed Event");
-    const description = this.sanitizeHtml(
+    // Clean and sanitise the data
+    const title = this.sanitiseText(item.summary || "Unnamed Event");
+    const description = this.sanitiseHtml(
       item.description || "No description available"
     );
-    const location = this.sanitizeText(item.location || "Location TBD");
+    const location = this.sanitiseText(item.location || "Location TBD");
 
     const categorization = this.categorizeEvent(title, description);
 
@@ -205,17 +207,20 @@ class EventMap {
     };
 
     // Get coordinates for the location (pass event title as venue name for better geocoding)
-    const coordinates = await this.getCoordinatesForLocation(location, event.title);
+    const coordinates = await this.getCoordinatesForLocation(
+      location,
+      event.title
+    );
     event.lat = coordinates.lat;
     event.lng = coordinates.lng;
 
     return event;
   }
 
-  sanitizeText(text) {
+  sanitiseText(text) {
     // Use enhanced sanitization from utils if available
-    if (this.utils && this.utils.sanitizeText) {
-      return this.utils.sanitizeText(text);
+    if (this.utils && this.utils.sanitiseText) {
+      return this.utils.sanitiseText(text);
     }
 
     // Fallback to basic sanitization
@@ -230,10 +235,10 @@ class EventMap {
       .trim();
   }
 
-  sanitizeHtml(html) {
+  sanitiseHtml(html) {
     // Use enhanced sanitization from utils if available
-    if (this.utils && this.utils.sanitizeHtml) {
-      return this.utils.sanitizeHtml(html);
+    if (this.utils && this.utils.sanitiseHtml) {
+      return this.utils.sanitiseHtml(html);
     }
 
     // Fallback to basic sanitization
@@ -584,9 +589,9 @@ class EventMap {
       if (venueName) {
         searchQuery = `${venueName}, ${address}`;
       }
-      
+
       const query = encodeURIComponent(searchQuery);
-      
+
       // Use Mapbox Geocoding API
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?country=gb&limit=1&access_token=${config.MAPBOX_API_KEY}`
@@ -600,12 +605,16 @@ class EventMap {
       if (data.features && data.features.length > 0) {
         const coords = data.features[0].geometry.coordinates;
         const result = { lat: coords[1], lng: coords[0] };
-        
+
         // Debug logging
         if (window.DEBUG_GEOCODING) {
-          console.log(`✓ Mapbox geocoded "${searchQuery}" to:`, result, `(confidence: ${data.features[0].relevance})`);
+          console.log(
+            `✓ Mapbox geocoded "${searchQuery}" to:`,
+            result,
+            `(confidence: ${data.features[0].relevance})`
+          );
         }
-        
+
         return result;
       } else {
         throw new Error("No geocoding results found");
@@ -1212,7 +1221,7 @@ class EventMap {
 
   showSampleDataNotification() {
     // Only show notification in dev environment (localhost)
-    const isProduction = window.location.hostname.includes('github.io');
+    const isProduction = window.location.hostname.includes("github.io");
     if (isProduction) {
       return; // Don't show banner in production
     }
@@ -1243,7 +1252,7 @@ class EventMap {
 
   showRealDataNotification() {
     // Only show notification in dev environment (localhost)
-    const isProduction = window.location.hostname.includes('github.io');
+    const isProduction = window.location.hostname.includes("github.io");
     if (isProduction) {
       return; // Don't show banner in production
     }
@@ -1295,7 +1304,7 @@ class EventMap {
     // Create a custom poppy icon for Remembrance period
     // Rotated to point at 11 o'clock (30 degrees counter-clockwise from 12 o'clock)
     return L.divIcon({
-      className: 'poppy-marker',
+      className: "poppy-marker",
       html: `<div style="position: relative; width: 40px; height: 40px;">
         <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
           <g transform="rotate(30 20 20)">
@@ -1312,7 +1321,7 @@ class EventMap {
       </div>`,
       iconSize: [40, 40],
       iconAnchor: [20, 40],
-      popupAnchor: [0, -40]
+      popupAnchor: [0, -40],
     });
   }
 
@@ -1675,9 +1684,14 @@ class EventMap {
         const eventsHtml = sortedEvents
           .map((event) => {
             // Generate tag badges for all categories - smaller for mobile
-            const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
-              ? event.categories
-              : (event.category ? [event.category] : ['other']);
+            const categories =
+              event.categories &&
+              Array.isArray(event.categories) &&
+              event.categories.length > 0
+                ? event.categories
+                : event.category
+                ? [event.category]
+                : ["other"];
 
             const tagBadges = categories
               .map(
@@ -1709,7 +1723,9 @@ class EventMap {
 
             return `
                     <div class="${elapsedClass} rounded-lg p-3 mb-3 border-l-4 ${borderClass}"
-                         onclick="eventMap.focusOnEvent('${event.id}')" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">
+                         onclick="eventMap.focusOnEvent('${
+                           event.id
+                         }')" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">
                         <div class="flex justify-between items-start mb-2">
                             <h5 class="text-sm font-semibold text-gray-800 leading-tight flex-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${
                               event.title
@@ -1808,9 +1824,14 @@ class EventMap {
         const eventsHtml = sortedEvents
           .map((event) => {
             // Generate tag badges for all categories
-            const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
-              ? event.categories
-              : (event.category ? [event.category] : ['other']);
+            const categories =
+              event.categories &&
+              Array.isArray(event.categories) &&
+              event.categories.length > 0
+                ? event.categories
+                : event.category
+                ? [event.category]
+                : ["other"];
 
             const tagBadges = categories
               .map(
@@ -1907,11 +1928,11 @@ class EventMap {
     const searchBtn = document.getElementById("searchBtn");
 
     const performSearch = async () => {
-      // Validate and sanitize search input
+      // Validate and sanitise search input
       const rawQuery = searchInput.value;
-      const sanitizedQuery =
+      const sanitisedQuery =
         this.utils?.validateSearchInput(rawQuery) || rawQuery.trim();
-      searchInput.value = sanitizedQuery; // Update input with sanitized value
+      searchInput.value = sanitisedQuery; // Update input with sanitised value
       await this.filterEvents();
     };
 
@@ -2629,7 +2650,9 @@ let eventMap;
 window.MapDebug = {
   enableDebug: () => {
     window.DEBUG_GEOCODING = true;
-    console.log("🐛 Geocoding debug mode enabled. Check console for geocoding results.");
+    console.log(
+      "🐛 Geocoding debug mode enabled. Check console for geocoding results."
+    );
   },
   disableDebug: () => {
     window.DEBUG_GEOCODING = false;
@@ -2649,18 +2672,22 @@ window.MapDebug = {
       console.error("EventMap not initialized yet");
       return;
     }
-    console.table(eventMap.events.map(e => ({
-      title: e.title,
-      location: e.location,
-      lat: e.lat,
-      lng: e.lng
-    })));
-  }
+    console.table(
+      eventMap.events.map((e) => ({
+        title: e.title,
+        location: e.location,
+        lat: e.lat,
+        lng: e.lng,
+      }))
+    );
+  },
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   eventMap = new EventMap();
-  console.log('✓ MapDebug available - use MapDebug.enableDebug() to see geocoding results');
+  console.log(
+    "✓ MapDebug available - use MapDebug.enableDebug() to see geocoding results"
+  );
 });
 
 // Expose methods for WordPress integration
