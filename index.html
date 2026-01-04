@@ -165,8 +165,29 @@
         <!-- Utility functions -->
         <script src="js/utils.js"></script>
         <!-- Optional: Include config.js for Google Calendar integration -->
-        <script src="config.js" onerror="console.log('config.js not found - using sample data')"></script>
-        <script src="script.js"></script>
+        <script>
+            (function () {
+                function loadMainScript() {
+                    var mainScript = document.createElement('script');
+                    mainScript.src = 'script.js';
+                    document.body.appendChild(mainScript);
+                }
+
+                var configScript = document.createElement('script');
+                configScript.src = 'config.js';
+                configScript.onload = function () {
+                    window.__CONFIG_LOADED__ = true;
+                    loadMainScript();
+                };
+                configScript.onerror = function () {
+                    console.log('config.js not found - using sample data');
+                    window.__CONFIG_LOADED__ = false;
+                    loadMainScript();
+                };
+
+                document.body.appendChild(configScript);
+            })();
+        </script>
     </body>
 
 </html>
