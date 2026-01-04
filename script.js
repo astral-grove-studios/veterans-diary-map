@@ -592,7 +592,7 @@ class EventMap {
 
       const query = encodeURIComponent(searchQuery);
 
-      // Use Mapbox Geocoding API
+      // Use Google Maps Geocoding API
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
           address + ", Northeast England, UK"
