@@ -1221,7 +1221,7 @@ class EventMap {
                 </div>
                 <div class="ml-3">
                     <p class="text-sm">
-                        <strong>Sample Data:</strong> Showing example VFVIC events for demonstration purposes. 
+                        <strong>Sample Data:</strong> Showing example VFVIC events for demonstration purposes.
                         These are not real events. Connect to a live calendar to display actual events.
                     </p>
                 </div>
@@ -2572,9 +2572,16 @@ class EventMap {
 
 // Initialize the event map when page loads
 let eventMap;
-document.addEventListener("DOMContentLoaded", () => {
+
+// Handle both cases: DOMContentLoaded already fired (dynamic script load) or not yet fired
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    eventMap = new EventMap();
+  });
+} else {
+  // DOM already loaded, initialize immediately
   eventMap = new EventMap();
-});
+}
 
 // Expose methods for WordPress integration
 window.EventMapAPI = {
