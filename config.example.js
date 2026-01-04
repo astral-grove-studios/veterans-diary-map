@@ -23,7 +23,7 @@ const CALENDAR_CONFIG = {
     MAX_EVENTS: 50,
 
     // Enable/disable geocoding (set to false to use predefined coordinates)
-    ENABLE_GEOCODING: false
+    ENABLE_GEOCODING: true
 };
 
 // Export for use in script.js
