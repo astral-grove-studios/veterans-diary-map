@@ -94,7 +94,9 @@ class EventMap {
 
       // If no events after filtering, throw error to trigger fallback to sample data
       if (this.events.length === 0) {
-        console.warn("No upcoming events found in calendar file (all events may be in the past)");
+        console.warn(
+          "No upcoming events found in calendar file (all events may be in the past)"
+        );
         throw new Error(
           "No upcoming events found in calendar file (all events may be in the past)"
         );
@@ -180,12 +182,12 @@ class EventMap {
   }
 
   async transformCalendarItem(item, id) {
-    // Clean and sanitize the data
-    const title = this.sanitizeText(item.summary || "Unnamed Event");
-    const description = this.sanitizeHtml(
+    // Clean and sanitise the data
+    const title = this.sanitiseText(item.summary || "Unnamed Event");
+    const description = this.sanitiseHtml(
       item.description || "No description available"
     );
-    const location = this.sanitizeText(item.location || "Location TBD");
+    const location = this.sanitiseText(item.location || "Location TBD");
 
     const categorization = this.categorizeEvent(title, description);
 
@@ -205,20 +207,23 @@ class EventMap {
     };
 
     // Get coordinates for the location (pass event title as venue name for better geocoding)
-    const coordinates = await this.getCoordinatesForLocation(location, event.title);
+    const coordinates = await this.getCoordinatesForLocation(
+      location,
+      event.title
+    );
     event.lat = coordinates.lat;
     event.lng = coordinates.lng;
 
     return event;
   }
 
-  sanitizeText(text) {
-    // Use enhanced sanitization from utils if available
-    if (this.utils && this.utils.sanitizeText) {
-      return this.utils.sanitizeText(text);
+  sanitiseText(text) {
+    // Use enhanced sanitisation from utils if available
+    if (this.utils && this.utils.sanitiseText) {
+      return this.utils.sanitiseText(text);
     }
 
-    // Fallback to basic sanitization
+    // Fallback to basic sanitisation
     if (!text) return "";
     return text
       .replace(/<[^>]*>/g, "")
@@ -230,13 +235,13 @@ class EventMap {
       .trim();
   }
 
-  sanitizeHtml(html) {
-    // Use enhanced sanitization from utils if available
-    if (this.utils && this.utils.sanitizeHtml) {
-      return this.utils.sanitizeHtml(html);
+  sanitiseHtml(html) {
+    // Use enhanced sanitisation from utils if available
+    if (this.utils && this.utils.sanitiseHtml) {
+      return this.utils.sanitiseHtml(html);
     }
 
-    // Fallback to basic sanitization
+    // Fallback to basic sanitisation
     if (!html) return "";
     return html
       .replace(/<p[^>]*>/g, "")
@@ -410,12 +415,12 @@ class EventMap {
       return coordinates;
     }
 
-    // If geocoding is enabled and we have Mapbox API key, try that
+    // If geocoding is enabled and we have Google Maps API key, try that
     const config = window.CALENDAR_CONFIG;
     if (
       config?.ENABLE_GEOCODING &&
-      config?.MAPBOX_API_KEY &&
-      config.MAPBOX_API_KEY !== "your-mapbox-api-key-here"
+      config?.GEOCODING_API_KEY &&
+      config.GEOCODING_API_KEY !== "your-geocoding-api-key-here"
     ) {
       try {
         return await this.geocodeLocation(location, venueName);
@@ -584,37 +589,29 @@ class EventMap {
       if (venueName) {
         searchQuery = `${venueName}, ${address}`;
       }
-      
+
       const query = encodeURIComponent(searchQuery);
-      
-      // Use Mapbox Geocoding API
+
+      // Use Google Maps Geocoding API
       const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?country=gb&limit=1&access_token=${config.MAPBOX_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+          address + ", Northeast England, UK"
+        )}&key=${config.GEOCODING_API_KEY}`
       );
 
       if (!response.ok) {
-        throw new Error(`Mapbox Geocoding API error: ${response.status}`);
+        throw new Error(`Geocoding API error: ${response.status}`);
       }
 
       const data = await response.json();
-      if (data.features && data.features.length > 0) {
-        const coords = data.features[0].geometry.coordinates;
-        const result = { lat: coords[1], lng: coords[0] };
-        
-        // Debug logging
-        if (window.DEBUG_GEOCODING) {
-          console.log(`✓ Mapbox geocoded "${searchQuery}" to:`, result, `(confidence: ${data.features[0].relevance})`);
-        }
-        
-        return result;
+      if (data.results && data.results.length > 0) {
+        const location = data.results[0].geometry.location;
+        return { lat: location.lat, lng: location.lng };
       } else {
         throw new Error("No geocoding results found");
       }
     } catch (error) {
       console.error("Geocoding failed:", error);
-      if (window.DEBUG_GEOCODING) {
-        console.log(`✗ Failed to geocode "${venueName || address}"`);
-      }
       throw error;
     }
   }
@@ -1211,13 +1208,7 @@ class EventMap {
   }
 
   showSampleDataNotification() {
-    // Only show notification in dev environment (localhost)
-    const isProduction = window.location.hostname.includes('github.io');
-    if (isProduction) {
-      return; // Don't show banner in production
-    }
-
-    // Create a notification banner for sample data
+    // Create a notification banner for sample/fallback data
     const notification = document.createElement("div");
     notification.className =
       "bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-5 rounded";
@@ -1230,7 +1221,8 @@ class EventMap {
                 </div>
                 <div class="ml-3">
                     <p class="text-sm">
-                        <strong>Sample Data:</strong> Showing demonstration events. Configure Google Calendar API to display real events.
+                        <strong>Sample Data:</strong> Showing example VFVIC events for demonstration purposes. 
+                        These are not real events. Connect to a live calendar to display actual events.
                     </p>
                 </div>
             </div>
@@ -1242,12 +1234,6 @@ class EventMap {
   }
 
   showRealDataNotification() {
-    // Only show notification in dev environment (localhost)
-    const isProduction = window.location.hostname.includes('github.io');
-    if (isProduction) {
-      return; // Don't show banner in production
-    }
-
     // Create a notification banner for real calendar data
     const notification = document.createElement("div");
     notification.className =
@@ -1283,37 +1269,6 @@ class EventMap {
     }).addTo(this.map);
 
     this.addMarkers();
-  }
-
-  isRemembrancePeriod() {
-    // Check if we're in November (Remembrance month)
-    const now = new Date();
-    return now.getMonth() === 10; // November is month 10 (0-indexed)
-  }
-
-  getPoppyIcon() {
-    // Create a custom poppy icon for Remembrance period
-    // Rotated to point at 11 o'clock (30 degrees counter-clockwise from 12 o'clock)
-    return L.divIcon({
-      className: 'poppy-marker',
-      html: `<div style="position: relative; width: 40px; height: 40px;">
-        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <g transform="rotate(30 20 20)">
-            <!-- Poppy petals -->
-            <ellipse cx="12" cy="15" rx="8" ry="10" fill="#E31E24" transform="rotate(-30 20 20)"/>
-            <ellipse cx="28" cy="15" rx="8" ry="10" fill="#E31E24" transform="rotate(30 20 20)"/>
-            <ellipse cx="12" cy="25" rx="8" ry="10" fill="#E31E24" transform="rotate(-150 20 20)"/>
-            <ellipse cx="28" cy="25" rx="8" ry="10" fill="#E31E24" transform="rotate(150 20 20)"/>
-            <!-- Center -->
-            <circle cx="20" cy="20" r="5" fill="#1a1a1a"/>
-            <circle cx="20" cy="20" r="3" fill="#0d5c1f"/>
-          </g>
-        </svg>
-      </div>`,
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-      popupAnchor: [0, -40]
-    });
   }
 
   addMarkers() {
@@ -1353,13 +1308,7 @@ class EventMap {
       if (eventsAtLocationDate.length === 1) {
         // Single event at this location on this date
         const event = eventsAtLocationDate[0];
-
-        // Use poppy icon during Remembrance period (November)
-        const markerOptions = this.isRemembrancePeriod()
-          ? { icon: this.getPoppyIcon() }
-          : {};
-
-        const marker = L.marker([lat, lng], markerOptions)
+        const marker = L.marker([lat, lng])
           .addTo(this.map)
           .bindPopup(this.createPopupContent(event));
 
@@ -1381,12 +1330,7 @@ class EventMap {
           return timeA.localeCompare(timeB);
         });
 
-        // Use poppy icon during Remembrance period (November)
-        const markerOptions = this.isRemembrancePeriod()
-          ? { icon: this.getPoppyIcon() }
-          : {};
-
-        const marker = L.marker([lat, lng], markerOptions)
+        const marker = L.marker([lat, lng])
           .addTo(this.map)
           .bindPopup(this.createMultiEventPopupContent(sortedEvents, date));
 
@@ -1675,10 +1619,12 @@ class EventMap {
         const eventsHtml = sortedEvents
           .map((event) => {
             // Generate tag badges for all categories - smaller for mobile
-            const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
-              ? event.categories
-              : (event.category ? [event.category] : ['other']);
-
+            const categories =
+              Array.isArray(event.categories) && event.categories.length > 0
+                ? event.categories
+                : event.category
+                ? [event.category]
+                : [];
             const tagBadges = categories
               .map(
                 (category) =>
@@ -1709,9 +1655,9 @@ class EventMap {
 
             return `
                     <div class="${elapsedClass} rounded-lg p-3 mb-3 border-l-4 ${borderClass}"
-                         onclick="eventMap.focusOnEvent('${event.id}')" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">
+                         onclick="eventMap.focusOnEvent('${event.id}')">
                         <div class="flex justify-between items-start mb-2">
-                            <h5 class="text-sm font-semibold text-gray-800 leading-tight flex-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${
+                            <h5 class="text-sm font-semibold text-gray-800 leading-tight flex-1">${
                               event.title
                             }</h5>
                             <div class="flex items-center ml-2">
@@ -1722,13 +1668,13 @@ class EventMap {
                             </div>
                         </div>
                         ${distanceInfo}
-                        <p class="text-xs text-gray-600 mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>📍</strong> ${
+                        <p class="text-xs text-gray-600 mb-1"><strong>📍</strong> ${
                           event.location
                         }</p>
                         <div class="mb-2">${tagBadges}</div>
                         ${
                           event.description
-                            ? `<p class="text-xs text-gray-700 line-clamp-2" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.description}</p>`
+                            ? `<p class="text-xs text-gray-700 line-clamp-2">${event.description}</p>`
                             : ""
                         }
                     </div>
@@ -1808,10 +1754,12 @@ class EventMap {
         const eventsHtml = sortedEvents
           .map((event) => {
             // Generate tag badges for all categories
-            const categories = event.categories && Array.isArray(event.categories) && event.categories.length > 0
-              ? event.categories
-              : (event.category ? [event.category] : ['other']);
-
+            const categories =
+              Array.isArray(event.categories) && event.categories.length > 0
+                ? event.categories
+                : event.category != null
+                ? [event.category]
+                : [];
             const tagBadges = categories
               .map(
                 (category) =>
@@ -1845,16 +1793,16 @@ class EventMap {
 
             return `
                     <div class="${elapsedClass} rounded-lg p-4 cursor-pointer transition-all duration-300 border-l-4 ${borderClass} ${hoverClass} hover:shadow-md hover:-translate-y-1 mb-4"
-                         data-event-id="${event.id}" onclick="eventMap.focusEvent(${event.id})" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">
+                         data-event-id="${event.id}" onclick="eventMap.focusEvent(${event.id})">
                         <div class="flex items-start justify-between mb-2">
-                            <h4 class="text-gray-800 text-lg font-semibold flex-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.title}</h4>
+                            <h4 class="text-gray-800 text-lg font-semibold flex-1">${event.title}</h4>
                             ${elapsedLabel}
                         </div>
-                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>⏰</strong> ${event.time}</p>
-                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>📍</strong> ${event.location}</p>
+                        <p class="text-gray-600 text-sm mb-1"><strong>⏰</strong> ${event.time}</p>
+                        <p class="text-gray-600 text-sm mb-1"><strong>📍</strong> ${event.location}</p>
                         ${distanceInfo}
-                        <p class="text-gray-600 text-sm mb-1" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;">${event.description}</p>
-                        <p class="text-gray-600 text-sm mb-2" style="word-wrap: break-word; overflow-wrap: break-word; hyphens: none;"><strong>👤</strong> ${event.organizer}</p>
+                        <p class="text-gray-600 text-sm mb-1">${event.description}</p>
+                        <p class="text-gray-600 text-sm mb-2"><strong>👤</strong> ${event.organizer}</p>
                         <div class="flex flex-wrap">${tagBadges}</div>
                     </div>
                 `;
@@ -1907,11 +1855,11 @@ class EventMap {
     const searchBtn = document.getElementById("searchBtn");
 
     const performSearch = async () => {
-      // Validate and sanitize search input
+      // Validate and sanitise search input
       const rawQuery = searchInput.value;
-      const sanitizedQuery =
+      const sanitisedQuery =
         this.utils?.validateSearchInput(rawQuery) || rawQuery.trim();
-      searchInput.value = sanitizedQuery; // Update input with sanitized value
+      searchInput.value = sanitisedQuery; // Update input with sanitised value
       await this.filterEvents();
     };
 
@@ -2624,43 +2572,8 @@ class EventMap {
 
 // Initialize the event map when page loads
 let eventMap;
-
-// Create MapDebug early to ensure it's available
-window.MapDebug = {
-  enableDebug: () => {
-    window.DEBUG_GEOCODING = true;
-    console.log("🐛 Geocoding debug mode enabled. Check console for geocoding results.");
-  },
-  disableDebug: () => {
-    window.DEBUG_GEOCODING = false;
-    console.log("🔇 Geocoding debug mode disabled.");
-  },
-  testGeocode: async (venueName, address) => {
-    if (!eventMap) {
-      console.error("EventMap not initialized yet");
-      return;
-    }
-    const result = await eventMap.geocodeLocation(address, venueName);
-    console.log(`Result for "${venueName}, ${address}":`, result);
-    return result;
-  },
-  listAllMarkers: () => {
-    if (!eventMap) {
-      console.error("EventMap not initialized yet");
-      return;
-    }
-    console.table(eventMap.events.map(e => ({
-      title: e.title,
-      location: e.location,
-      lat: e.lat,
-      lng: e.lng
-    })));
-  }
-};
-
 document.addEventListener("DOMContentLoaded", () => {
   eventMap = new EventMap();
-  console.log('✓ MapDebug available - use MapDebug.enableDebug() to see geocoding results');
 });
 
 // Expose methods for WordPress integration
