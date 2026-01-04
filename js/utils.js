@@ -85,9 +85,9 @@ function hideLoadingSpinner() {
 }
 
 /**
- * Enhanced text sanitization to prevent XSS
+ * Enhanced text sanitisation to prevent XSS
  * @param {string} text - Text to sanitise
- * @returns {string} Sanitized text
+ * @returns {string} Sanitised text
  */
 function sanitiseText(text) {
   if (!text) return "";
@@ -104,9 +104,9 @@ function sanitiseText(text) {
 }
 
 /**
- * Enhanced HTML sanitization
+ * Enhanced HTML sanitisation
  * @param {string} html - HTML to sanitise
- * @returns {string} Sanitized HTML
+ * @returns {string} Sanitised HTML
  */
 function sanitiseHtml(html) {
   if (!html) return "";

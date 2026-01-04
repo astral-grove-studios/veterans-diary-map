@@ -218,12 +218,12 @@ class EventMap {
   }
 
   sanitiseText(text) {
-    // Use enhanced sanitization from utils if available
+    // Use enhanced sanitisation from utils if available
     if (this.utils && this.utils.sanitiseText) {
       return this.utils.sanitiseText(text);
     }
 
-    // Fallback to basic sanitization
+    // Fallback to basic sanitisation
     if (!text) return "";
     return text
       .replace(/<[^>]*>/g, "")
@@ -236,12 +236,12 @@ class EventMap {
   }
 
   sanitiseHtml(html) {
-    // Use enhanced sanitization from utils if available
+    // Use enhanced sanitisation from utils if available
     if (this.utils && this.utils.sanitiseHtml) {
       return this.utils.sanitiseHtml(html);
     }
 
-    // Fallback to basic sanitization
+    // Fallback to basic sanitisation
     if (!html) return "";
     return html
       .replace(/<p[^>]*>/g, "")
