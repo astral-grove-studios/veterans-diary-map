@@ -42,6 +42,9 @@ jobs:
           node fetch-events.js
         continue-on-error: true
       
+      - name: Copy example config to config.js
+        run: cp config.example.js config.js
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
