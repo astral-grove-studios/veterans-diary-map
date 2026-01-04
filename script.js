@@ -1619,7 +1619,13 @@ class EventMap {
         const eventsHtml = sortedEvents
           .map((event) => {
             // Generate tag badges for all categories - smaller for mobile
-            const tagBadges = (event.categories || [event.category])
+            const categories =
+              Array.isArray(event.categories) && event.categories.length > 0
+                ? event.categories
+                : event.category
+                ? [event.category]
+                : [];
+            const tagBadges = categories
               .map(
                 (category) =>
                   `<span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-white mr-1 mb-1 ${this.getCategoryColorClass(
