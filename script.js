@@ -415,17 +415,36 @@ class EventMap {
       return coordinates;
     }
 
-    // If geocoding is enabled and we have Google Maps API key, try that
     const config = window.CALENDAR_CONFIG;
-    if (
-      config?.ENABLE_GEOCODING &&
-      config?.GEOCODING_API_KEY &&
-      config.GEOCODING_API_KEY !== "your-geocoding-api-key-here"
-    ) {
-      try {
-        return await this.geocodeLocation(location, venueName);
-      } catch (error) {
-        console.warn(`Geocoding failed for "${venueName || location}":`, error);
+
+    if (config?.ENABLE_GEOCODING) {
+      // Try to extract and geocode UK postcode using free postcodes.io API
+      const postcode = this.extractUKPostcode(location);
+      if (postcode) {
+        try {
+          const postcodeCoords = await this.geocodeUKPostcode(postcode);
+          if (postcodeCoords) {
+            console.log(`Geocoded postcode ${postcode} for "${venueName || location}"`);
+            return postcodeCoords;
+          }
+        } catch (error) {
+          console.warn(`Postcode geocoding failed for "${postcode}":`, error);
+        }
+      }
+
+      // Try Google Geocoding API if API key is available
+      if (
+        config?.GEOCODING_API_KEY &&
+        config.GEOCODING_API_KEY !== "your-google-geocoding-api-key-here"
+      ) {
+        try {
+          const googleCoords = await this.geocodeWithGoogle(location, venueName);
+          if (googleCoords) {
+            return googleCoords;
+          }
+        } catch (error) {
+          console.warn(`Google geocoding failed for "${venueName || location}":`, error);
+        }
       }
     }
 
@@ -435,6 +454,80 @@ class EventMap {
       lng: -1.6178,
     };
     return this.generateUniqueCoordinates(location, fallbackCoords);
+  }
+
+  // Extract UK postcode from address string
+  extractUKPostcode(address) {
+    if (!address) return null;
+    // UK postcode regex - matches formats like "NE31 1PN", "SR7 7NH", etc.
+    const postcodeRegex = /\b([A-Z]{1,2}[0-9][A-Z0-9]?\s?[0-9][A-Z]{2})\b/i;
+    const match = address.match(postcodeRegex);
+    return match ? match[1].toUpperCase().replace(/\s+/g, ' ').trim() : null;
+  }
+
+  // Geocode UK postcode using free postcodes.io API
+  async geocodeUKPostcode(postcode) {
+    try {
+      const cleanPostcode = postcode.replace(/\s+/g, '');
+      const response = await fetch(
+        `https://api.postcodes.io/postcodes/${encodeURIComponent(cleanPostcode)}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Postcodes.io API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.status === 200 && data.result) {
+        return {
+          lat: data.result.latitude,
+          lng: data.result.longitude,
+        };
+      }
+      throw new Error('Postcode not found');
+    } catch (error) {
+      console.warn(`postcodes.io geocoding failed for "${postcode}":`, error);
+      return null;
+    }
+  }
+
+  // Geocode address using Google Geocoding API
+  async geocodeWithGoogle(address, venueName = null) {
+    const config = window.CALENDAR_CONFIG;
+    try {
+      // Combine venue name and address for better accuracy
+      let searchQuery = address;
+      if (venueName && !address.toLowerCase().includes(venueName.toLowerCase().substring(0, 10))) {
+        searchQuery = `${venueName}, ${address}`;
+      }
+
+      // Add UK context for better results
+      const fullQuery = `${searchQuery}, UK`;
+
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+          fullQuery
+        )}&key=${config.GEOCODING_API_KEY}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Google Geocoding API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.status === "OK" && data.results && data.results.length > 0) {
+        const location = data.results[0].geometry.location;
+        console.log(`Google geocoded "${searchQuery}" to [${location.lat}, ${location.lng}]`);
+        return { lat: location.lat, lng: location.lng };
+      } else if (data.status === "ZERO_RESULTS") {
+        throw new Error('No Google results found');
+      } else {
+        throw new Error(`Google API error: ${data.status}`);
+      }
+    } catch (error) {
+      console.warn(`Google geocoding failed for "${venueName || address}":`, error);
+      return null;
+    }
   }
 
   generateUniqueCoordinates(location, baseCoords) {
@@ -456,6 +549,7 @@ class EventMap {
       lng: baseCoords.lng + lngOffset,
     };
   }
+
 
   getKnownLocationCoordinates(location) {
     const locationMap = {
