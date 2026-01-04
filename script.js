@@ -415,12 +415,12 @@ class EventMap {
       return coordinates;
     }
 
-    // If geocoding is enabled and we have Mapbox API key, try that
+    // If geocoding is enabled and we have Google Maps API key, try that
     const config = window.CALENDAR_CONFIG;
     if (
       config?.ENABLE_GEOCODING &&
-      config?.MAPBOX_API_KEY &&
-      config.MAPBOX_API_KEY !== "your-mapbox-api-key-here"
+      config?.GEOCODING_API_KEY &&
+      config.GEOCODING_API_KEY !== "your-geocoding-api-key-here"
     ) {
       try {
         return await this.geocodeLocation(location, venueName);
