@@ -415,7 +415,7 @@ class EventMap {
 
   decodeHTMLEntities(text) {
     // Decode HTML entities like \u003cp\u003e to <p>
-    const textarea = document.createElement('textarea');
+    const textarea = document.createElement("textarea");
     textarea.innerHTML = text;
     return textarea.value;
   }
@@ -424,9 +424,20 @@ class EventMap {
     const config = window.CALENDAR_CONFIG;
 
     // Debug: Log geocoding attempt
-    console.log(`[Geocoding] Attempting to geocode: "${location}" (venue: ${venueName || 'N/A'})`);
-    console.log(`[Geocoding] Config ENABLE_GEOCODING: ${config?.ENABLE_GEOCODING}`);
-    console.log(`[Geocoding] Config GEOCODING_API_KEY exists: ${!!config?.GEOCODING_API_KEY && config.GEOCODING_API_KEY !== "your-google-geocoding-api-key-here"}`);
+    console.log(
+      `[Geocoding] Attempting to geocode: "${location}" (venue: ${
+        venueName || "N/A"
+      })`
+    );
+    console.log(
+      `[Geocoding] Config ENABLE_GEOCODING: ${config?.ENABLE_GEOCODING}`
+    );
+    console.log(
+      `[Geocoding] Config GEOCODING_API_KEY exists: ${
+        !!config?.GEOCODING_API_KEY &&
+        config.GEOCODING_API_KEY !== "your-google-geocoding-api-key-here"
+      }`
+    );
 
     // Use Google Geocoding API directly (simplified for debugging)
     if (
@@ -437,14 +448,18 @@ class EventMap {
       try {
         const googleCoords = await this.geocodeWithGoogle(location, venueName);
         if (googleCoords) {
-          console.log(`[Geocoding] SUCCESS: "${location}" -> [${googleCoords.lat}, ${googleCoords.lng}]`);
+          console.log(
+            `[Geocoding] SUCCESS: "${location}" -> [${googleCoords.lat}, ${googleCoords.lng}]`
+          );
           return googleCoords;
         }
       } catch (error) {
         console.error(`[Geocoding] FAILED for "${location}":`, error);
       }
     } else {
-      console.warn(`[Geocoding] Skipped - geocoding disabled or API key missing`);
+      console.warn(
+        `[Geocoding] Skipped - geocoding disabled or API key missing`
+      );
     }
 
     // Fallback: Try predefined locations for common Northeast England venues
@@ -455,7 +470,9 @@ class EventMap {
     }
 
     // Last resort: Generate unique coordinates using hash-based offset
-    console.warn(`[Geocoding] Using fallback hash coordinates for "${location}"`);
+    console.warn(
+      `[Geocoding] Using fallback hash coordinates for "${location}"`
+    );
     const fallbackCoords = config?.DEFAULT_REGION || {
       lat: 54.9783,
       lng: -1.6178,
@@ -466,7 +483,7 @@ class EventMap {
   // Geocode address using Google Geocoding API
   async geocodeWithGoogle(address, venueName = null) {
     const config = window.CALENDAR_CONFIG;
-    
+
     // Use the full address as-is (Google Calendar locations are usually complete)
     const searchQuery = address;
     console.log(`[Google Geocoding] Querying: "${searchQuery}"`);
@@ -487,17 +504,21 @@ class EventMap {
     if (data.status === "OK" && data.results && data.results.length > 0) {
       const location = data.results[0].geometry.location;
       const formattedAddress = data.results[0].formatted_address;
-      console.log(`[Google Geocoding] Resolved to: "${formattedAddress}" [${location.lat}, ${location.lng}]`);
+      console.log(
+        `[Google Geocoding] Resolved to: "${formattedAddress}" [${location.lat}, ${location.lng}]`
+      );
       return { lat: location.lat, lng: location.lng };
     } else if (data.status === "REQUEST_DENIED") {
-      console.error(`[Google Geocoding] REQUEST_DENIED - Check API key permissions. Error: ${data.error_message}`);
+      console.error(
+        `[Google Geocoding] REQUEST_DENIED - Check API key permissions. Error: ${data.error_message}`
+      );
       throw new Error(`API key issue: ${data.error_message}`);
     } else if (data.status === "OVER_QUERY_LIMIT") {
       console.error(`[Google Geocoding] OVER_QUERY_LIMIT - Too many requests`);
-      throw new Error('Over query limit');
+      throw new Error("Over query limit");
     } else if (data.status === "ZERO_RESULTS") {
       console.warn(`[Google Geocoding] No results for: "${searchQuery}"`);
-      throw new Error('No results found');
+      throw new Error("No results found");
     } else {
       console.error(`[Google Geocoding] Unexpected status: ${data.status}`);
       throw new Error(`Google API error: ${data.status}`);
@@ -523,7 +544,6 @@ class EventMap {
       lng: baseCoords.lng + lngOffset,
     };
   }
-
 
   getKnownLocationCoordinates(location) {
     const locationMap = {
@@ -1378,7 +1398,7 @@ class EventMap {
         const event = eventsAtLocationDate[0];
         const marker = L.marker([lat, lng])
           .addTo(this.map)
-          .bindPopup(this.createPopupContent(event));
+          .bindPopup(this.createPopupContent(event), { html: true });
 
         // Store marker reference on the event for mobile focus functionality
         event._marker = marker;
@@ -1400,7 +1420,9 @@ class EventMap {
 
         const marker = L.marker([lat, lng])
           .addTo(this.map)
-          .bindPopup(this.createMultiEventPopupContent(sortedEvents, date));
+          .bindPopup(this.createMultiEventPopupContent(sortedEvents, date), {
+            html: true,
+          });
 
         // Store marker reference on the first event for mobile focus functionality
         sortedEvents[0]._marker = marker;
