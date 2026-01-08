@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - codebase_optimisation
-      - feature/google-geocoding-implementation
   workflow_dispatch:
   schedule:
     # Fetch fresh events daily at 6 AM UTC
