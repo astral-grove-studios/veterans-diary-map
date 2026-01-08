@@ -334,10 +334,15 @@ class EventMap {
       calendarEvent.description
     );
 
+    // Decode HTML entities in description
+    const decodedDescription = this.decodeHTMLEntities(
+      calendarEvent.description || "No description available"
+    );
+
     const event = {
       id: index,
       title: calendarEvent.summary || "Unnamed Event",
-      description: calendarEvent.description || "No description available",
+      description: decodedDescription,
       category: categorization.primary || categorization,
       categories: categorization.tags || [categorization],
       date: this.extractDate(calendarEvent),
@@ -406,6 +411,13 @@ class EventMap {
       minute: "2-digit",
       hour12: false, // Use 24-hour format for UK
     });
+  }
+
+  decodeHTMLEntities(text) {
+    // Decode HTML entities like \u003cp\u003e to <p>
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
   }
 
   async getCoordinatesForLocation(location, venueName = null) {
