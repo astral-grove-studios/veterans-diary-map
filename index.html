@@ -4,6 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <base href="/veterans-diary-map/">
         <title>Veterans Diary - Event Map</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
@@ -166,27 +167,27 @@
         <script src="js/utils.js"></script>
         <!-- Optional: Include config.js for Google Calendar integration -->
         <script>
-            (function () {
-                function loadMainScript() {
-                    var mainScript = document.createElement('script');
-                    mainScript.src = 'script.js';
-                    document.body.appendChild(mainScript);
-                }
+                (function () {
+                    function loadMainScript() {
+                        var mainScript = document.createElement('script');
+                        mainScript.src = 'script.js';
+                        document.body.appendChild(mainScript);
+                    }
 
-                var configScript = document.createElement('script');
-                configScript.src = 'config.js';
-                configScript.onload = function () {
-                    window.__CONFIG_LOADED__ = true;
-                    loadMainScript();
-                };
-                configScript.onerror = function () {
-                    console.log('config.js not found - using sample data');
-                    window.__CONFIG_LOADED__ = false;
-                    loadMainScript();
-                };
+                    var configScript = document.createElement('script');
+                    configScript.src = 'config.js';
+                    configScript.onload = function () {
+                        window.__CONFIG_LOADED__ = true;
+                        loadMainScript();
+                    };
+                    configScript.onerror = function () {
+                        console.log('config.js not found - using sample data');
+                        window.__CONFIG_LOADED__ = false;
+                        loadMainScript();
+                    };
 
-                document.body.appendChild(configScript);
-            })();
+                    document.body.appendChild(configScript);
+                })();
         </script>
     </body>
 
