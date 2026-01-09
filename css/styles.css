@@ -5,6 +5,15 @@
 
 .leaflet-popup-content-wrapper {
     min-width: 350px !important;
+    max-width: min(90vw, 420px) !important;
+}
+
+/* Mobile-optimized popup wrapper */
+@media (max-width: 768px) {
+    .leaflet-popup-content-wrapper {
+        min-width: 0 !important;
+        max-width: 90vw !important;
+    }
 }
 
 .leaflet-popup-content h4 {

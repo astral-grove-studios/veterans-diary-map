@@ -15,6 +15,10 @@ class EventMap {
       "30ed1sa1ev6k8kgp0ucg1mq24j_R20260105",
     ];
 
+    // Helper to check if a recurring event should be excluded
+    this.isExcludedRecurringEvent = (recurringEventId) =>
+      this.excludedRecurringEventIds.includes(recurringEventId);
+
     // Use config constants
     const config = window.EventMapUtils?.CONFIG || {};
     this.eventsPerPage = config.EVENTS_PER_PAGE || 20;
@@ -44,15 +48,6 @@ class EventMap {
         "Could not load Google Calendar events, using sample data:",
         apiError
       );
-      this.loadSampleEvents();
-
-      if (this.utils) {
-        this.utils.showToast(
-          "Using sample data. Configure Google Calendar for live events.",
-          "info",
-          5000
-        );
-      }
     }
 
     this.filteredEvents = [...this.events];
@@ -187,7 +182,6 @@ class EventMap {
       .trim();
   }
 
-
   async loadGoogleCalendarEvents() {
     // Check if configuration is available
     const config = window.CALENDAR_CONFIG;
@@ -237,7 +231,9 @@ class EventMap {
         // Skip excluded recurring events (Public Announcements)
         if (
           calendarEvent.recurringEventId &&
-          this.excludedRecurringEventIds.includes(calendarEvent.recurringEventId)
+          this.excludedRecurringEventIds.includes(
+            calendarEvent.recurringEventId
+          )
         ) {
           continue;
         }
@@ -441,8 +437,6 @@ class EventMap {
       lng: baseCoords.lng + lngOffset,
     };
   }
-
-
 
   async geocodeLocation(address, venueName = null) {
     const config = window.CALENDAR_CONFIG;
@@ -1574,8 +1568,6 @@ class EventMap {
     );
   }
 
-
-
   // Geocode a place name for proximity search
   async geocodePlaceName(placeName) {
     try {
@@ -1649,13 +1641,6 @@ class EventMap {
 
       let searchQuery = cleanPostcode;
       let searchRadius = 15; // Default search radius in km
-
-      if (isPartial) {
-        // For partial postcodes, search for the area center and use larger radius
-        searchQuery = cleanPostcode + ", UK";
-      } else {
-        searchQuery = cleanPostcode + ", UK";
-      }
 
       // Try Google Geocoding API if available
       if (
