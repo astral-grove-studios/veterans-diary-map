@@ -5,7 +5,6 @@
 
 .leaflet-popup-content-wrapper {
     min-width: 350px !important;
-    background-color: aqua !important;
 }
 
 .leaflet-popup-content h4 {
@@ -21,6 +20,10 @@
     line-height: 1.4 !important;
 }
 
+/* #eventItems {
+    max-height: calc(85vh - 150px) !important;
+}
+ */
 /* Ensure map takes full height of container */
 #map {
     height: 100% !important;
