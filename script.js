@@ -235,14 +235,14 @@ class EventMap {
       .trim();
   }
 
-  sanitiseHtml(html) {
-    // Use enhanced sanitisation from utils if available
-    if (this.utils && this.utils.sanitiseHtml) {
+  /*   sanitiseHtml(html) { */
+  // Use enhanced sanitisation from utils if available
+  /*  if (this.utils && this.utils.sanitiseHtml) {
       return this.utils.sanitiseHtml(html);
-    }
+    } */
 
-    // Fallback to basic sanitisation
-    if (!html) return "";
+  // Fallback to basic sanitisation
+  /*     if (!html) return "";
     return html
       .replace(/<p[^>]*>/g, "")
       .replace(/<\/p>/g, "\n")
@@ -250,7 +250,7 @@ class EventMap {
       .replace(/<[^>]*>/g, "")
       .replace(/\n+/g, " ")
       .trim();
-  }
+  } */
 
   extractOrganizer(item) {
     // Try to extract organizer from various fields
@@ -1398,7 +1398,7 @@ class EventMap {
         const event = eventsAtLocationDate[0];
         const marker = L.marker([lat, lng])
           .addTo(this.map)
-          .bindPopup(this.createPopupContent(event), { html: true });
+          .bindPopup(this.createPopupContent(event));
 
         // Store marker reference on the event for mobile focus functionality
         event._marker = marker;
@@ -1420,9 +1420,7 @@ class EventMap {
 
         const marker = L.marker([lat, lng])
           .addTo(this.map)
-          .bindPopup(this.createMultiEventPopupContent(sortedEvents, date), {
-            html: true,
-          });
+          .bindPopup(this.createMultiEventPopupContent(sortedEvents, date));
 
         // Store marker reference on the first event for mobile focus functionality
         sortedEvents[0]._marker = marker;
