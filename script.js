@@ -73,8 +73,7 @@ class EventMap {
       try {
         // Skip excluded recurring events (Public Announcements)
         if (
-          item.recurringEventId &&
-          this.excludedRecurringEventIds.includes(item.recurringEventId)
+          this.isExcludedRecurringEvent(item.recurringEventId)
         ) {
           continue;
         }
@@ -231,9 +230,7 @@ class EventMap {
 
         // Skip excluded recurring events (Public Announcements)
         if (
-          calendarEvent.recurringEventId &&
-          this.excludedRecurringEventIds.includes(
-            calendarEvent.recurringEventId
+         this.isExcludedRecurringEvent(calendarEvent.recurringEventId
           )
         ) {
           continue;
