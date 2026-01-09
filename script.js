@@ -39,15 +39,16 @@ class EventMap {
       this.utils.showLoadingSpinner("Loading events...");
     }
 
-    // Try to load events from local calendar file first, then Google Calendar API, then sample data
+    // Try to load events from Google Calendar API
 
     try {
       await this.loadGoogleCalendarEvents();
     } catch (apiError) {
       console.warn(
-        "Could not load Google Calendar events, using sample data:",
+        "Could not load Google Calendar events:",
         apiError
       );
+
     }
 
     this.filteredEvents = [...this.events];
