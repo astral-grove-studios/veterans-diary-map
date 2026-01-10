@@ -12,7 +12,7 @@ class EventMap {
     // Recurring event IDs to exclude (Public Announcements)
     this.excludedRecurringEventIds = [
       "2scpgqhjtjh5tc33cg3jm3ik5c",
-      "30ed1sa1ev6k8kgp0ucg1mq24j_R20260105",
+      "30ed1sa1ev6k8kgp0ucg1mq24j",
     ];
 
     // Helper to check if a recurring event should be excluded
@@ -44,11 +44,7 @@ class EventMap {
     try {
       await this.loadGoogleCalendarEvents();
     } catch (apiError) {
-      console.warn(
-        "Could not load Google Calendar events:",
-        apiError
-      );
-
+      console.warn("Could not load Google Calendar events:", apiError);
     }
 
     this.filteredEvents = [...this.events];
@@ -72,9 +68,7 @@ class EventMap {
 
       try {
         // Skip excluded recurring events (Public Announcements)
-        if (
-          this.isExcludedRecurringEvent(item.recurringEventId)
-        ) {
+        if (this.isExcludedRecurringEvent(item.recurringEventId)) {
           continue;
         }
 
@@ -229,10 +223,7 @@ class EventMap {
         const calendarEvent = data.items[i];
 
         // Skip excluded recurring events (Public Announcements)
-        if (
-         this.isExcludedRecurringEvent(calendarEvent.recurringEventId
-          )
-        ) {
+        if (this.isExcludedRecurringEvent(calendarEvent.recurringEventId)) {
           continue;
         }
 
@@ -336,7 +327,6 @@ class EventMap {
   }
 
   decodeHTMLEntities(text) {
-    // Decode HTML entities like \u003cp\u003e to <p>
     const textarea = document.createElement("textarea");
     textarea.innerHTML = text;
     return textarea.value;
