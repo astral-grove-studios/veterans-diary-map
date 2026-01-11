@@ -41,3 +41,12 @@ temp/
 
 # OS files
 Thumbs.db
+
+
+# Others
+CHANGELOG.md
+fetch-events.js
+GITHUB_*.md
+GOOGLE_*.md
+google-calendar-events.*
+WORDPRESS_*.md

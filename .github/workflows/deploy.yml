@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - codebase_optimisation
   workflow_dispatch:
   schedule:
     # Fetch fresh events daily at 6 AM UTC
@@ -55,24 +54,13 @@ jobs:
           sed -i "s|your-calendar-id@group.calendar.google.com|$GOOGLE_CALENDAR_ID|g" config.js
           sed -i "s|your-google-geocoding-api-key-here|$GEOCODING_API_KEY|g" config.js
 
-      - name: Build deployment directory
-        run: |
-          mkdir -p dist
-          cp index.html dist/
-          cp config.js dist/
-          cp script.js dist/
-          cp styles.css dist/
-          cp -r css dist/
-          cp -r js dist/
-          cp -r google-calendar-events dist/ 2>/dev/null || true
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'
+          path: '.'
 
       - name: Deploy to GitHub Pages
         id: deployment
